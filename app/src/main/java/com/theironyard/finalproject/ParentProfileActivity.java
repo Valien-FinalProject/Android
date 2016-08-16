@@ -82,9 +82,9 @@ public class ParentProfileActivity extends AppCompatActivity
 
         if (id == R.id.nav_chore) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_view_chores) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_view_wishlists) {
 
         } else if (id == R.id.nav_manage) {
 

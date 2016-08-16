@@ -3,11 +3,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_view_chores"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="View Progress" />
+            android:title="View Chores" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_view_wishlists"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="View Wishlists" />
+        <item
+            android:id="@+id/nav_view_calendar"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="View Calendar" />
     </group>
@@ -19,23 +23,23 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_child"
                 android:title="Create Child" />
             <item
                 android:id="@+id/nav_chore"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/ic_menu_star"
                 android:title="Create Chore" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_menu_edit"
                 android:title="Update Profile" />
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_menu_manage"
+                android:icon="@drawable/ic_menu_settings"
                 android:title="Settings" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/ic_menu_power"
                 android:title="Logout" />
         </menu>
     </item>
