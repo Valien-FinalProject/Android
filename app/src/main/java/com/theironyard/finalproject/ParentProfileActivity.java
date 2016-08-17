@@ -1,5 +1,6 @@
 package com.theironyard.finalproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,22 +81,56 @@ public class ParentProfileActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_chore) {
+        if (id == R.id.nav_settings) {
             // Handle the camera action
         } else if (id == R.id.nav_view_chores) {
-
+            startPViewChores();
         } else if (id == R.id.nav_view_wishlists) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+            startPViewWishlist();
+        } else if (id == R.id.nav_view_calendar) {
+            startViewCalendar();
+        } else if (id == R.id.nav_create_child) {
+            startCreateChild();
+        } else if (id == R.id.nav_create_chore) {
+            startCreateChores();
+        }else if (id == R.id.nav_update) {
+            startUpdateProfile();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void startPViewChores() {
+        Intent intent = new Intent(this, ParentViewChoresActivity.class);
+        startActivity(intent);
+    }
+
+    private void startPViewWishlist() {
+        Intent intent = new Intent(this, ParentViewWishlistActivity.class);
+        startActivity(intent);
+    }
+
+    private void startViewCalendar() {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        startActivity(intent);
+    }
+
+    private void startCreateChild() {
+        Intent intent = new Intent(this, CreateChildActivity.class);
+        startActivity(intent);
+    }
+
+    private void startCreateChores() {
+        Intent intent = new Intent(this, CreateChoreActivity.class);
+        startActivity(intent);
+    }
+
+    private void startUpdateProfile() {
+        Intent intent = new Intent(this, UpdateProfileActivity.class);
+        startActivity(intent);
+    }
+
+
 }

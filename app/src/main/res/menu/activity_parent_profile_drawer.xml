@@ -8,11 +8,11 @@
             android:title="View Chores" />
         <item
             android:id="@+id/nav_view_wishlists"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="View Wishlists" />
         <item
             android:id="@+id/nav_view_calendar"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_event"
             android:title="View Calendar" />
     </group>
 
@@ -22,15 +22,15 @@
         android:title="Manage">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_create_child"
                 android:icon="@drawable/ic_menu_child"
                 android:title="Create Child" />
             <item
-                android:id="@+id/nav_chore"
+                android:id="@+id/nav_create_chore"
                 android:icon="@drawable/ic_menu_star"
                 android:title="Create Chore" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_update"
                 android:icon="@drawable/ic_menu_edit"
                 android:title="Update Profile" />
             <item
