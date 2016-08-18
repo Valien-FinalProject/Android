@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -29,7 +30,10 @@
             android:label="@string/title_activity_parent_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CreateChoreActivity"/>
-        <activity android:name=".ChildProfileActivity"/>
+        <activity
+            android:name=".ChildProfileActivity"
+            android:label="ChildProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".CreateRewardActivity"/>
         <activity android:name=".ParentViewWishlistActivity">
         </activity>
@@ -46,6 +50,10 @@
         <activity android:name=".CalendarActivity">
         </activity>
         <activity android:name=".TestActivity">
+        </activity>
+        <activity android:name=".ChildViewChoresActivity">
+        </activity>
+        <activity android:name=".ChildViewWishlistActivity">
         </activity>
     </application>
 

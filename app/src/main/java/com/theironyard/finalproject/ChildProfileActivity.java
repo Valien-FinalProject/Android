@@ -56,7 +56,7 @@ public class ChildProfileActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.parent_profile, menu);
+        getMenuInflater().inflate(R.menu.child_profile, menu);
         return true;
     }
 
@@ -84,16 +84,14 @@ public class ChildProfileActivity extends AppCompatActivity
         if (id == R.id.nav_settings) {
             // Handle the camera action
         } else if (id == R.id.nav_view_chores) {
-            startPViewChores();
+            startCViewChores();
         } else if (id == R.id.nav_view_wishlists) {
-            startPViewWishlist();
+            startCViewWishlist();
         } else if (id == R.id.nav_view_calendar) {
             startViewCalendar();
-        } else if (id == R.id.nav_create_child) {
-            startCreateChild();
-        } else if (id == R.id.nav_create_chore) {
-            startCreateChores();
-        }else if (id == R.id.nav_update) {
+        } else if (id == R.id.nav_create_wishlist_item) {
+            startCreateWishlistItem();
+        } else if (id == R.id.nav_update) {
             startUpdateProfile();
         }
 
@@ -102,13 +100,13 @@ public class ChildProfileActivity extends AppCompatActivity
         return true;
     }
 
-    private void startPViewChores() {
-        Intent intent = new Intent(this, ParentViewChoresActivity.class);
+    private void startCViewChores() {
+        Intent intent = new Intent(this, ChildViewChoresActivity.class);
         startActivity(intent);
     }
 
-    private void startPViewWishlist() {
-        Intent intent = new Intent(this, ParentViewWishlistActivity.class);
+    private void startCViewWishlist() {
+        Intent intent = new Intent(this, ChildViewWishlistActivity.class);
         startActivity(intent);
     }
 
@@ -117,13 +115,8 @@ public class ChildProfileActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void startCreateChild() {
-        Intent intent = new Intent(this, CreateChildActivity.class);
-        startActivity(intent);
-    }
-
-    private void startCreateChores() {
-        Intent intent = new Intent(this, CreateChoreActivity.class);
+    private void startCreateWishlistItem() {
+        Intent intent = new Intent(this, CreateWishlistItemActivity.class);
         startActivity(intent);
     }
 
