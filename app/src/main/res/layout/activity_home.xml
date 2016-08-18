@@ -39,19 +39,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Register"
-                android:id="@+id/button40"/>
+                android:id="@+id/registerButton"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Parent Login"
-                android:id="@+id/button41"/>
+                android:id="@+id/pLoginButton"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Child Login"
-                android:id="@+id/button42"/>
+                android:id="@+id/cLoginButton"/>
         </LinearLayout>
 
     </LinearLayout>
