@@ -55,6 +55,12 @@
         </activity>
         <activity android:name=".ChildViewWishlistActivity">
         </activity>
+        <activity android:name=".RegistrationActivity">
+        </activity>
+        <activity android:name=".ParentLoginActivity">
+        </activity>
+        <activity android:name=".ChildLoginActivity">
+        </activity>
     </application>
 
 </manifest>

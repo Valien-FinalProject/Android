@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/childNameText"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/editText2"
-            android:layout_below="@+id/editText"
+            android:id="@+id/childPasswordText"
+            android:layout_below="@+id/childNameText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Password" />
@@ -39,7 +39,7 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editText25"
+            android:id="@+id/childConfirmPasswordText"
             android:hint="Confirm Password"/>
 
         <EditText
@@ -47,10 +47,10 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/editText3"
-            android:layout_below="@+id/editText2"
-            android:layout_alignRight="@+id/editText2"
-            android:layout_alignEnd="@+id/editText2"
+            android:id="@+id/childEmailText"
+            android:layout_below="@+id/childPasswordText"
+            android:layout_alignRight="@+id/childPasswordText"
+            android:layout_alignEnd="@+id/childPasswordText"
             android:hint="E-mail" />
 
         <EditText
@@ -58,22 +58,11 @@
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/editText4"
-            android:layout_below="@+id/editText3"
-            android:layout_alignRight="@+id/editText3"
-            android:layout_alignEnd="@+id/editText3"
+            android:id="@+id/childPhoneText"
+            android:layout_below="@+id/childEmailText"
+            android:layout_alignRight="@+id/childEmailText"
+            android:layout_alignEnd="@+id/childEmailText"
             android:hint="Phone #" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/editText5"
-            android:layout_below="@+id/editText4"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:hint="Birthdate" />
 
     </LinearLayout>
 
@@ -81,7 +70,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Create Child"
-        android:id="@+id/button"
+        android:id="@+id/createChildButton"
         android:layout_alignParentTop="false"
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
