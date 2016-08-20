@@ -42,6 +42,10 @@ public class ParentChoreService {
         getEditor().putString(TOKEN_KEY, token).commit();
     }
 
+    public static void saveUser(UserCommand userCommand){
+        getEditor().putString("usercommand", String.valueOf(userCommand)).commit();
+    }
+
     private static SharedPreferences.Editor getEditor(){
         return chorePrefs.edit();
     }
@@ -96,5 +100,35 @@ public class ParentChoreService {
         Call<ArrayList<Child>> getChildren();
     }
 
+    //Create Child
+
+    public CreateChild getCreateChildAPI() throws Exception {
+
+        String token = ParentChoreService.getCurrentToken();
+        if(token == null){
+            throw new Exception("Cannot use api without a token");
+        }
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Chain chain) throws IOException {
+                        Request request = chain.request().newBuilder()
+                                .addHeader("Authorization", "Bearer " + ParentChoreService.getCurrentToken())
+                                .build();
+                        return chain.proceed(request);
+                    }
+                }).build();
+
+        return new Retrofit.Builder()
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(PARENT_BASE)
+                .build().create(CreateChild.class);
+    }
+    interface CreateChild{
+        @POST("child")
+        Call<UserCommand> getChildInfo(@Body UserCommand user);
+    }
 }
 

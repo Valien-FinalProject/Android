@@ -9,63 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CreateChildActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/createChildNameText"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:hint="Name" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:ems="10"
-            android:id="@+id/createChildPasswordText"
-            android:layout_below="@+id/createChildNameText"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:hint="Password" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/createChildConfirmPasswordText"
-            android:hint="Confirm Password"/>
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/createChildEmailText"
-            android:layout_below="@+id/createChildPasswordText"
-            android:layout_alignRight="@+id/createChildPasswordText"
-            android:layout_alignEnd="@+id/createChildPasswordText"
-            android:hint="E-mail" />
-
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:id="@+id/createChildPhoneText"
-            android:layout_below="@+id/createChildEmailText"
-            android:layout_alignRight="@+id/createChildEmailText"
-            android:layout_alignEnd="@+id/createChildEmailText"
-            android:hint="Phone #" />
-
-    </LinearLayout>
-
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -75,5 +18,61 @@
         android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildNameText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Name"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildUsernameText"
+        android:layout_below="@+id/createChildNameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Username"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildPasswordText"
+        android:layout_below="@+id/createChildUsernameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildConfirmPasswordText"
+        android:layout_below="@+id/createChildPasswordText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildEmailText"
+        android:layout_below="@+id/createChildConfirmPasswordText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Email Address"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChildPhoneText"
+        android:layout_below="@+id/createChildEmailText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Enter Phone #"/>
 
 </RelativeLayout>

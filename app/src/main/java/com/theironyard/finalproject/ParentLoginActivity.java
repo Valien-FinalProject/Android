@@ -28,7 +28,7 @@ public class ParentLoginActivity extends AppCompatActivity {
     EditText mParentLoginPasswordText;
 
     @Bind(R.id.parentSignInButton)
-    Button mParentLoginSignInButton;
+    Button mParentSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class ParentLoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.parentSignInButton)
     public void onClick(View view) {
-        Snackbar.make(view, "You clicked login!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, "You clicked SignIn!", Snackbar.LENGTH_LONG).show();
 
         ParentChoreService choreService = new ParentChoreService();
         String username = mParentLoginUsernameText.getText().toString();
@@ -57,13 +57,13 @@ public class ParentLoginActivity extends AppCompatActivity {
                             startActivity(new Intent(ParentLoginActivity.this, ParentProfileActivity.class));
                         }
                         else{
-                            Snackbar.make(mParentLoginSignInButton, "Unable to Login.Try again", Snackbar.LENGTH_LONG);
+                            Snackbar.make(mParentSignInButton, "Unable to Login.Try again", Snackbar.LENGTH_LONG);
                         }
                     }
 
                     @Override
                     public void onFailure(retrofit2.Call<TokenCommand> call, Throwable t) {
-                        Snackbar.make(mParentLoginSignInButton, "System Failed.Try again", Snackbar.LENGTH_LONG);
+                        Snackbar.make(mParentSignInButton, "System Failed.Try again", Snackbar.LENGTH_LONG);
                         Log.e(TAG, "API is throwing errors", t);
                     }
                 });
