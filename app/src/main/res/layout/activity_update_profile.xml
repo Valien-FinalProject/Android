@@ -52,35 +52,36 @@
         </LinearLayout>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText17"
-            android:hint="Name"/>
+            android:id="@+id/updateProfileNameText"
+            android:hint="Enter Name"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText18"
+            android:id="@+id/updateProfileOldPasswordText"
             android:hint="Old Password"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText19"
+            android:id="@+id/updateProfileNewPasswordText"
             android:text="New Password"/>
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText20"
-            android:hint="Confirm New Password"/>
+            android:id="@+id/updateProfileConfirmPasswordText"
+            android:hint="Confirm New Password"
+            android:inputType="textPassword"/>
     </LinearLayout>
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Update"
-        android:id="@+id/button25"
+        android:id="@+id/updateProfileButton"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>

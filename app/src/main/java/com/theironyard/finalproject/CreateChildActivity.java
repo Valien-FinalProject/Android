@@ -18,11 +18,11 @@ public class CreateChildActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_child);
 
-        mName = (EditText)findViewById(R.id.childNameText);
-        mPassword = (EditText)findViewById(R.id.childPasswordText);
-        mConfirmPassword = (EditText)findViewById(R.id.childConfirmPasswordText);
-        mEmail = (EditText)findViewById(R.id.childEmailText);
-        mPhone = (EditText)findViewById(R.id.childPhoneText);
+        mName = (EditText)findViewById(R.id.createChildNameText);
+        mPassword = (EditText)findViewById(R.id.createChildPasswordText);
+        mConfirmPassword = (EditText)findViewById(R.id.createChildConfirmPasswordText);
+        mEmail = (EditText)findViewById(R.id.createChildEmailText);
+        mPhone = (EditText)findViewById(R.id.createChildPhoneText);
     }
 
     @Override

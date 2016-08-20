@@ -15,31 +15,31 @@
         android:layout_height="match_parent">
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/childNameText"
+            android:id="@+id/createChildNameText"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Name" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/childPasswordText"
-            android:layout_below="@+id/childNameText"
+            android:id="@+id/createChildPasswordText"
+            android:layout_below="@+id/createChildNameText"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:hint="Password" />
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/childConfirmPasswordText"
+            android:id="@+id/createChildConfirmPasswordText"
             android:hint="Confirm Password"/>
 
         <EditText
@@ -47,10 +47,10 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/childEmailText"
-            android:layout_below="@+id/childPasswordText"
-            android:layout_alignRight="@+id/childPasswordText"
-            android:layout_alignEnd="@+id/childPasswordText"
+            android:id="@+id/createChildEmailText"
+            android:layout_below="@+id/createChildPasswordText"
+            android:layout_alignRight="@+id/createChildPasswordText"
+            android:layout_alignEnd="@+id/createChildPasswordText"
             android:hint="E-mail" />
 
         <EditText
@@ -58,10 +58,10 @@
             android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/childPhoneText"
-            android:layout_below="@+id/childEmailText"
-            android:layout_alignRight="@+id/childEmailText"
-            android:layout_alignEnd="@+id/childEmailText"
+            android:id="@+id/createChildPhoneText"
+            android:layout_below="@+id/createChildEmailText"
+            android:layout_alignRight="@+id/createChildEmailText"
+            android:layout_alignEnd="@+id/createChildEmailText"
             android:hint="Phone #" />
 
     </LinearLayout>

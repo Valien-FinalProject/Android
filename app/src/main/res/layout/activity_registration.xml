@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/regUsernameText"
         android:layout_alignParentTop="true"
@@ -28,7 +28,7 @@
         android:hint="Enter Username"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/regNameText"
         android:layout_below="@+id/regUsernameText"
@@ -37,7 +37,7 @@
         android:hint="Enter Name"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/regPasswordText"
         android:layout_below="@+id/regNameText"
@@ -46,7 +46,7 @@
         android:hint="Enter Password"/>
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/regConfirmPasswordText"
         android:layout_below="@+id/regPasswordText"

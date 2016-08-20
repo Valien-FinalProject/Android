@@ -24,7 +24,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Search Amazon"
-            android:id="@+id/button26"/>
+            android:id="@+id/searchAmazonButton"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -38,7 +38,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Add Item To Wishlist"
-        android:id="@+id/button27"
+        android:id="@+id/addItemToWishlistButton"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
