@@ -12,91 +12,66 @@
     tools:context="com.theironyard.finalproject.ParentProfileActivity"
     tools:showIn="@layout/app_bar_parent_profile">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pProfileChildSpinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:longClickable="true"
+        android:paddingBottom="10dp"/>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:id="@+id/linearLayout4">
+        android:layout_height="wrap_content"
+        android:text="Chores Left To Do Today"
+        android:id="@+id/textView14"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:background="#f9bcbc"
+        android:layout_below="@+id/pProfileChildSpinner"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chores left to do today:"
-            android:id="@+id/textView14"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresTodayListView"
+        android:layout_below="@+id/textView14"
+        android:layout_centerHorizontal="true"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Chore Desc"
-            android:id="@+id/textView15" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Chore Desc"
-            android:id="@+id/textView16" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Chore Desc"
-            android:id="@+id/textView17" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/linearLayout4"
-        android:id="@+id/linearLayout5">
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/pProfileChoresTodayListView"
+        android:layout_centerHorizontal="true"
+        android:text="Chores Pending Approval"
+        android:textAlignment="center"
+        android:background="#faf8d3"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chores Pending:???"
-            android:id="@+id/textView18"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresPendingListView"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true"/>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/linearLayout5">
+        android:layout_height="wrap_content"
+        android:text="Chores Completed Today"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/pProfileChoresPendingListView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:background="#9bfaa0"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Approve Completed Chores:"
-            android:id="@+id/textView19"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chore Desc"
-            android:id="@+id/checkBox11" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chore Desc"
-            android:id="@+id/checkBox12" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Chore Desc"
-            android:id="@+id/checkBox13" />
-    </LinearLayout>
-
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresCompletedListView"
+        android:layout_below="@+id/textView16"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

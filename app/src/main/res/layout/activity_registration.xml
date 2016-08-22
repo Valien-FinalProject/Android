@@ -43,7 +43,8 @@
         android:layout_below="@+id/regNameText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Enter Password"/>
+        android:hint="Enter Password"
+        android:inputType="textPassword"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -52,7 +53,8 @@
         android:layout_below="@+id/regPasswordText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Confirm Password"/>
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
 
     <LinearLayout
         android:orientation="horizontal"

@@ -10,7 +10,8 @@ public class UserCommand {
     private String name;
     private String email;
     private String phone;
-
+    private boolean emailOptIn;
+    private boolean phoneOptIn;
 
     public UserCommand() {
     }
@@ -26,6 +27,17 @@ public class UserCommand {
         this.name = name;
         this.email = email;
         this.phone = phone;
+    }
+
+    public UserCommand(String username, String password, String name, String email, String phone,
+                       boolean emailOptIn, boolean phoneOptIn) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.emailOptIn = emailOptIn;
+        this.phoneOptIn = phoneOptIn;
     }
 
     public String getUsername() {
@@ -66,5 +78,21 @@ public class UserCommand {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public boolean isEmailOptIn() {
+        return emailOptIn;
+    }
+
+    public void setEmailOptIn(boolean emailOptIn) {
+        this.emailOptIn = emailOptIn;
+    }
+
+    public boolean isPhoneOptIn() {
+        return phoneOptIn;
+    }
+
+    public void setPhoneOptIn(boolean phoneOptIn) {
+        this.phoneOptIn = phoneOptIn;
     }
 }
