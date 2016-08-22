@@ -11,170 +11,57 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context="com.theironyard.finalproject.ChildProfileActivity"
                 tools:showIn="@layout/app_bar_child_profile">
+
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chores To Do (check when completed):"
-        android:id="@+id/textView4"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="Chores Left To Do Today"
+        android:id="@+id/textView14"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:background="#f9bcbc"
+        android:textStyle="bold"/>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresTodayListView"
+        android:layout_below="@+id/textView14"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout2">
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:layout_below="@+id/pProfileChoresTodayListView"
+        android:layout_centerHorizontal="true"
+        android:text="Chores Pending Approval"
+        android:textAlignment="center"
+        android:background="#faf8d3"
+        android:textStyle="bold"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ChoreDesc - 10 pts"
-            android:id="@+id/checkBox8" />
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresPendingListView"
+        android:layout_below="@+id/textView15"
+        android:layout_centerHorizontal="true"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ChoreDesc - 20 pts"
-            android:id="@+id/checkBox9" />
-
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ChoreDesc - 15 pts"
-            android:id="@+id/checkBox10" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout3">
+        android:layout_height="wrap_content"
+        android:text="Chores Completed Today"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/pProfileChoresPendingListView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:background="#9bfaa0"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Wishlist:"
-            android:id="@+id/textView5"
-            android:layout_below="@+id/linearLayout2"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Video Game - 100pts"
-                android:id="@+id/textView6"
-                android:layout_below="@+id/textView5"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button37"
-                android:text="Delete"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Toy - 60pts"
-                android:id="@+id/textView7"
-                android:layout_below="@+id/textView6"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:id="@+id/button38"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Disney vacation - 1000pts"
-                android:id="@+id/textView8"
-                android:layout_below="@+id/textView7"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:id="@+id/button39"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:layout_below="@+id/linearLayout3">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Point Tracker:"
-            android:id="@+id/textView9"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Points Earned Today = 10"
-            android:id="@+id/textView10" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Points Earned This Week = 50"
-            android:id="@+id/textView11" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Points Lost Today = 10"
-            android:id="@+id/textView13" />
-
-    </LinearLayout>
-
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="135dp"
+        android:id="@+id/pProfileChoresCompletedListView"
+        android:layout_below="@+id/textView16"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

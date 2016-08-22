@@ -13,6 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import butterknife.ButterKnife;
 
 public class ChildProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -21,6 +25,54 @@ public class ChildProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_profile);
+        ButterKnife.bind(this);
+
+        /*******************************************
+         * Today's Chores ListView and ArrayAdapter
+         *******************************************/
+
+        String[]  myStringArray={"Chore1","Chore2","Chore3"};
+        ArrayAdapter<String> myAdapter=new
+                ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                myStringArray);
+        ListView myList=(ListView)
+                findViewById(R.id.pProfileChoresTodayListView);
+        myList.setAdapter(myAdapter);
+
+        /*******************************************
+         * Pending Chores ListView and ArrayAdapter
+         *******************************************/
+
+        String[]  myStringArray2={"Chore1","Chore2","Chore3"};
+        ArrayAdapter<String> myAdapter2=new
+                ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                myStringArray);
+        ListView myList2=(ListView)
+                findViewById(R.id.pProfileChoresPendingListView);
+        myList2.setAdapter(myAdapter2);
+
+        /****************************************************
+         * Today's Completed Chores ListView and ArrayAdapter
+         ****************************************************/
+
+        String[]  myStringArray3={"Chore1","Chore2","Chore3"};
+        ArrayAdapter<String> myAdapter3=new
+                ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_list_item_1,
+                myStringArray);
+        ListView myList3=(ListView)
+                findViewById(R.id.pProfileChoresCompletedListView);
+        myList3.setAdapter(myAdapter3);
+
+        /************************************
+         * Navigation
+         ************************************/
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
