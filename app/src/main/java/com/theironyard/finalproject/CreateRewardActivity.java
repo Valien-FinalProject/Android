@@ -151,14 +151,13 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    AdapterView.OnClickListener listener = new AdapterView.OnClickListener() {
+    AdapterView.OnClickListener mListener = new AdapterView.OnClickListener() {
 
         @Override
         public void onClick(View view) {
 
         }
     };
-
 
     public void setDefaultValues() {
         mName.setText("");
