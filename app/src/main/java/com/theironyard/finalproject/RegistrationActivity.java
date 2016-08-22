@@ -70,7 +70,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 phone, emailOptIn, phoneOptIn);
 
         try {
-        parentChoreService.getRegisterParentAPI().getParentInfo(userCommand)
+        parentChoreService.getParentApi().getParentInfo(userCommand)
                 .enqueue(new Callback<UserCommand>() {
                     @Override
                     public void onResponse(Call<UserCommand> call, Response<UserCommand> response) {

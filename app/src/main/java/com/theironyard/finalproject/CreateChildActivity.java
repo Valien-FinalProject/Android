@@ -74,7 +74,7 @@ public class CreateChildActivity extends AppCompatActivity implements View.OnCli
         final UserCommand userCommand = new UserCommand(username, password, name, email, phone);
 
         try {
-            parentChoreService.getCreateChildAPI().getChildInfo(userCommand)
+            parentChoreService.getParentApi().getChildInfo(userCommand)
                     .enqueue(new Callback<UserCommand>() {
                         @Override
                         public void onResponse(Call<UserCommand> call, Response<UserCommand> response) {

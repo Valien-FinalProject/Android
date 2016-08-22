@@ -17,7 +17,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.theironyard.finalproject.representations.Child;
+import com.theironyard.finalproject.representations.Chore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ParentProfileActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,60 +39,172 @@ public class ParentProfileActivity extends AppCompatActivity
         setContentView(R.layout.activity_parent_profile);
         ButterKnife.bind(this);
 
+        ParentChoreService parentChoreService = new ParentChoreService();
+        String token = "token " + parentChoreService.getCurrentToken();
+
+        final Spinner topSpinner = (Spinner)  findViewById(R.id.pProfileChildSpinner);
+        final Map<String, Integer> childMap = new HashMap<>();
+
         /************************************
          * Spinner
          ************************************/
 
-        String[] childName={"Valerie", "Eddy", "Nigel", "Alex"};
-        ArrayAdapter<String> stringArrayAdapter=
-                new ArrayAdapter<String>(this,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        childName);
-        Spinner spinner =
-                (Spinner)  findViewById(R.id.pProfileChildSpinner);
-        spinner.setAdapter(stringArrayAdapter);
+        try {
+            Call<ArrayList<Child>> call = parentChoreService.getParentApi().getChildren(token);
+            call.enqueue(new Callback<ArrayList<Child>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Child>> call, Response<ArrayList<Child>> response) {
+                    ArrayList<Child> children = response.body();
+                    ArrayList<String> childrenNames = new ArrayList<String>();
+                    Iterator<Child> childrenNamesIterator = children.iterator();
+                    while(childrenNamesIterator.hasNext()){
+                        childrenNames.add(childrenNamesIterator.next().getName());
+                        childMap.put(childrenNamesIterator.next().getName(), childrenNamesIterator.next().getId());
+                    }
+                    ArrayAdapter<String> stringArrayAdapter=
+                            new ArrayAdapter<>(ParentProfileActivity.this,
+                                    android.R.layout.simple_spinner_dropdown_item,
+                                    childrenNames);
+                    topSpinner.setAdapter(stringArrayAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Child>> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int childId = childMap.get(topSpinner.getSelectedItem().toString());
 
         /*******************************************
          * Today's Chores ListView and ArrayAdapter
          *******************************************/
 
-        String[]  myStringArray={"Chore1","Chore2","Chore3"};
-        ArrayAdapter<String> myAdapter=new
-                ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                myStringArray);
-        ListView myList=(ListView)
-                findViewById(R.id.pProfileChoresTodayListView);
-        myList.setAdapter(myAdapter);
+        try {
+            Call<ArrayList<Chore>> callCurrentChores = parentChoreService.getParentApi().getCurrentChores(token, childId);
+            callCurrentChores.enqueue(new Callback<ArrayList<Chore>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
+                    ArrayList<Chore> chores = response.body();
+                    ArrayList<String> choreNames = new ArrayList<>();
+                    Iterator<Chore> choreNamesIterator = chores.iterator();
+                    while(choreNamesIterator.hasNext()){
+                        choreNames.add(choreNamesIterator.next().getName());
+                    }
+                    ArrayAdapter<String> stringArrayAdapter=
+                            new ArrayAdapter<>(ParentProfileActivity.this,
+                                    android.R.layout.simple_list_item_1,
+                                    choreNames);
+                    ListView myList=(ListView)
+                            findViewById(R.id.pProfileChoresTodayListView);
+                    myList.setAdapter(stringArrayAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        String[]  myStringArray={"Chore1","Chore2","Chore3"};
+//        ArrayAdapter<String> myAdapter=new
+//                ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                myStringArray);
+//        ListView myList=(ListView)
+//                findViewById(R.id.pProfileChoresTodayListView);
+//        myList.setAdapter(myAdapter);
 
         /*******************************************
          * Pending Chores ListView and ArrayAdapter
          *******************************************/
 
-        String[]  myStringArray2={"Chore1","Chore2","Chore3"};
-        ArrayAdapter<String> myAdapter2=new
-                ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                myStringArray);
-        ListView myList2=(ListView)
-                findViewById(R.id.pProfileChoresPendingListView);
-        myList2.setAdapter(myAdapter2);
+        try {
+            Call<ArrayList<Chore>> callPendingChores = parentChoreService.getParentApi().getPendingChores(token, childId);
+            callPendingChores.enqueue(new Callback<ArrayList<Chore>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
+                    ArrayList<Chore> chores = response.body();
+                    ArrayList<String> choreNames = new ArrayList<>();
+                    Iterator<Chore> choreNamesIterator = chores.iterator();
+                    while(choreNamesIterator.hasNext()){
+                        choreNames.add(choreNamesIterator.next().getName());
+                    }
+                    ArrayAdapter<String> stringArrayAdapter=
+                            new ArrayAdapter<>(ParentProfileActivity.this,
+                                    android.R.layout.simple_list_item_1,
+                                    choreNames);
+                    ListView myList=(ListView)
+                            findViewById(R.id.pProfileChoresPendingListView);
+                    myList.setAdapter(stringArrayAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        String[]  myStringArray2={"Chore1","Chore2","Chore3"};
+//        ArrayAdapter<String> myAdapter2=new
+//                ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                myStringArray);
+//        ListView myList2=(ListView)
+//                findViewById(R.id.pProfileChoresPendingListView);
+//        myList2.setAdapter(myAdapter2);
 
         /****************************************************
          * Today's Completed Chores ListView and ArrayAdapter
          ****************************************************/
 
-        String[]  myStringArray3={"Chore1","Chore2","Chore3"};
-        ArrayAdapter<String> myAdapter3=new
-                ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_list_item_1,
-                myStringArray);
-        ListView myList3=(ListView)
-                findViewById(R.id.pProfileChoresCompletedListView);
-        myList3.setAdapter(myAdapter3);
+        try {
+            Call<ArrayList<Chore>> callCompletedChores = parentChoreService.getParentApi().getCompletedChores(token, childId);
+            callCompletedChores.enqueue(new Callback<ArrayList<Chore>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
+                    ArrayList<Chore> chores = response.body();
+                    ArrayList<String> choreNames = new ArrayList<>();
+                    Iterator<Chore> choreNamesIterator = chores.iterator();
+                    while(choreNamesIterator.hasNext()){
+                        choreNames.add(choreNamesIterator.next().getName());
+                    }
+                    ArrayAdapter<String> stringArrayAdapter=
+                            new ArrayAdapter<>(ParentProfileActivity.this,
+                                    android.R.layout.simple_list_item_1,
+                                    choreNames);
+                    ListView myList=(ListView)
+                            findViewById(R.id.pProfileChoresCompletedListView);
+                    myList.setAdapter(stringArrayAdapter);
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        String[]  myStringArray3={"Chore1","Chore2","Chore3"};
+//        ArrayAdapter<String> myAdapter3=new
+//                ArrayAdapter<String>(
+//                this,
+//                android.R.layout.simple_list_item_1,
+//                myStringArray);
+//        ListView myList3=(ListView)
+//                findViewById(R.id.pProfileChoresCompletedListView);
+//        myList3.setAdapter(myAdapter3);
 
         /************************************
          * Navigation

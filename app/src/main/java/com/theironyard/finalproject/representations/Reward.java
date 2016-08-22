@@ -1,0 +1,35 @@
+package com.theironyard.finalproject.representations;
+
+/**
+ * Created by vasantia on 8/22/16.
+ */
+public class Reward {
+
+    private String description;
+    private String url;
+    private int points;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+}

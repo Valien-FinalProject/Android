@@ -6,8 +6,10 @@ import android.content.SharedPreferences;
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
 import com.theironyard.finalproject.representations.Child;
+import com.theironyard.finalproject.representations.Chore;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.Interceptor;
@@ -19,7 +21,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by vasantia on 8/19/16.
@@ -97,76 +101,57 @@ public class ParentChoreService {
 
     interface ParentAPI{
         @GET("children")
-        Call<ArrayList<Child>> getChildren();
-    }
-    /************************************
-     * Register Parent
-     ************************************/
+        Call<ArrayList<Child>> getChildren(@Header(TOKEN_KEY) String token);
 
-    public RegisterParent getRegisterParentAPI() throws Exception {
+        @GET("child/{id}/current")
+        Call<ArrayList<Chore>>getCurrentChores(@Header(TOKEN_KEY) String token, @Path("id") int id);
 
-        String token = ParentChoreService.getCurrentToken();
-        if(token == null){
-            throw new Exception("Cannot use api without a token");
-        }
+        @GET("child/{id}/pending")
+        Call<ArrayList<Chore>>getPendingChores(@Header(TOKEN_KEY) String token, @Path("id") int id);
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request().newBuilder()
-                                .addHeader("Authorization", "Bearer " + ParentChoreService.getCurrentToken())
-                                .build();
-                        return chain.proceed(request);
-                    }
-                }).build();
+        @GET("child/{id}/complete")
+        Call<ArrayList<Chore>>getCompletedChores(@Header(TOKEN_KEY) String token, @Path("id") int id);
 
-        return new Retrofit.Builder()
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(PARENT_BASE)
-                .build().create(RegisterParent.class);
-    }
-
-    interface RegisterParent{
-        @POST("register")
-        Call<UserCommand> getParentInfo(@Body UserCommand user);
-    }
-    /************************************
-     * Create Child
-     ************************************/
-
-    public CreateChild getCreateChildAPI() throws Exception {
-
-        String token = ParentChoreService.getCurrentToken();
-        if(token == null){
-            throw new Exception("Cannot use api without a token");
-        }
-
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request request = chain.request().newBuilder()
-                                .addHeader("Authorization", "Bearer " + ParentChoreService.getCurrentToken())
-                                .build();
-                        return chain.proceed(request);
-                    }
-                }).build();
-
-        return new Retrofit.Builder()
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(PARENT_BASE)
-                .build().create(CreateChild.class);
-    }
-    interface CreateChild{
         @POST("child")
         Call<UserCommand> getChildInfo(@Body UserCommand user);
-    }
 
-    /************************************
-     * Re
-     ************************************/
+        @POST("register")
+        Call<UserCommand> getParentInfo(@Body UserCommand user);
+
+    }
+//    /************************************
+//     * Register Parent
+//     ************************************/
+//
+//    public RegisterParent getRegisterParentAPI() throws Exception {
+//
+//        String token = ParentChoreService.getCurrentToken();
+//        if(token == null){
+//            throw new Exception("Cannot use api without a token");
+//        }
+//
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Chain chain) throws IOException {
+//                        Request request = chain.request().newBuilder()
+//                                .addHeader("Authorization", "Bearer " + ParentChoreService.getCurrentToken())
+//                                .build();
+//                        return chain.proceed(request);
+//                    }
+//                }).build();
+//
+//        return new Retrofit.Builder()
+//                .client(client)
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .baseUrl(PARENT_BASE)
+//                .build().create(RegisterParent.class);
+//    }
+//
+//    interface RegisterParent{
+//        @POST("register")
+//        Call<UserCommand> getParentInfo(@Body UserCommand user);
+//    }
+
 }
 
