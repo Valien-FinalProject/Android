@@ -5,17 +5,25 @@ package com.theironyard.finalproject.command;
  */
 public class RewardCommand {
 
+    private String name;
     private String description;
-    private String url;
     private int points;
 
     public RewardCommand() {
     }
 
-    public RewardCommand(String description, String url, int points) {
+    public RewardCommand(String name, String description, int points) {
+        this.name = name;
         this.description = description;
-        this.url = url;
         this.points = points;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -24,14 +32,6 @@ public class RewardCommand {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public int getPoints() {

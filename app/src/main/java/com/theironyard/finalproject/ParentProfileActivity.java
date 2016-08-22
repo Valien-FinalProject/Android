@@ -114,16 +114,6 @@ public class ParentProfileActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
 
-//        String[]  myStringArray={"Chore1","Chore2","Chore3"};
-//        ArrayAdapter<String> myAdapter=new
-//                ArrayAdapter<String>(
-//                this,
-//                android.R.layout.simple_list_item_1,
-//                myStringArray);
-//        ListView myList=(ListView)
-//                findViewById(R.id.pProfileChoresTodayListView);
-//        myList.setAdapter(myAdapter);
-
                 /*******************************************
                  * Pending Chores ListView and ArrayAdapter
                  *******************************************/

@@ -26,8 +26,12 @@
                 android:icon="@drawable/ic_menu_child"
                 android:title="Create Child" />
             <item
-                android:id="@+id/nav_create_chore"
+                android:id="@+id/nav_create_reward"
                 android:icon="@drawable/ic_menu_star"
+                android:title="Create Reward" />
+            <item
+                android:id="@+id/nav_create_chore"
+                android:icon="@drawable/ic_menu_check"
                 android:title="Create Chore" />
             <item
                 android:id="@+id/nav_update"

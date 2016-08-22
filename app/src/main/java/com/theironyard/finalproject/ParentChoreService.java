@@ -3,10 +3,12 @@ package com.theironyard.finalproject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.theironyard.finalproject.command.RewardCommand;
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
 import com.theironyard.finalproject.representations.Child;
 import com.theironyard.finalproject.representations.Chore;
+import com.theironyard.finalproject.representations.Reward;
 
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -48,6 +50,10 @@ public class ParentChoreService {
 
     public static void saveUser(UserCommand userCommand){
         getEditor().putString("usercommand", String.valueOf(userCommand)).commit();
+    }
+
+    public static void saveReward(RewardCommand rewardCommand){
+        getEditor().putString("rewardCommand", String.valueOf(rewardCommand)).commit();
     }
 
     private static SharedPreferences.Editor getEditor(){
@@ -114,6 +120,12 @@ public class ParentChoreService {
 
         @POST("child")
         Call<UserCommand> getChildInfo(@Body UserCommand user);
+
+        @POST("reward")
+        Call<RewardCommand> getRewardInfo(@Body RewardCommand reward);
+
+        @GET("rewards")
+        Call<ArrayList<Reward>> getParentRewards(@Header(TOKEN_KEY) String token);
 
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);

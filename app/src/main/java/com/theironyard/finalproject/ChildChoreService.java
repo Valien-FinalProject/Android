@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
 import com.theironyard.finalproject.representations.Child;
+import com.theironyard.finalproject.representations.Chore;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import retrofit2.http.POST;
  */
 public class ChildChoreService {
     public static String BASE_URL = "https://vast-fortress-99365.herokuapp.com/";
-    public static String PARENT_BASE = BASE_URL + "child/";
+    public static String CHILD_BASE = BASE_URL + "child/";
     private static SharedPreferences chorePrefs;
     private static final String TOKEN_KEY = "token";
 
@@ -61,19 +62,19 @@ public class ChildChoreService {
     public Login getLoginApi(){
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(PARENT_BASE)
+                .baseUrl(CHILD_BASE)
                 .build().create(Login.class);
     }
 
     interface Login{
         @POST("token")
-        Call<TokenCommand> getParentToken(@Body UserCommand user);
+        Call<TokenCommand> getChildToken(@Body UserCommand user);
     }
 
     /************************************
-     * Parent Method
+     * Child Method
      ************************************/
-    public static ParentAPI getParentApi() throws Exception {
+    public static ChildAPI getChildApi() throws Exception {
         String token = ChildChoreService.getCurrentToken();
         if(token == null){
             throw new Exception("Cannot use api without a token");
@@ -93,18 +94,15 @@ public class ChildChoreService {
         return new Retrofit.Builder()
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(PARENT_BASE)
-                .build().create(ParentAPI.class);
+                .baseUrl(CHILD_BASE)
+                .build().create(ChildAPI.class);
     }
 
-    interface ParentAPI{
-        @GET("children")
-        Call<ArrayList<Child>> getChildren();
+    interface ChildAPI{
+        @GET("chores")
+        Call<ArrayList<Chore>> getChores();
     }
 
 
-    /************************************
-     * Re
-     ************************************/
 }
 

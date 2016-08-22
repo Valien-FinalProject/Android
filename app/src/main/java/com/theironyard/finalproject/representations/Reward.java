@@ -5,9 +5,18 @@ package com.theironyard.finalproject.representations;
  */
 public class Reward {
 
+    private String name;
     private String description;
     private String url;
     private int points;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getDescription() {
         return description;
