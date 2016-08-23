@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,7 +11,6 @@ import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.representations.Reward;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import okhttp3.Interceptor;
@@ -33,7 +32,7 @@ import retrofit2.http.Path;
 public class ParentChoreService {
     public static String BASE_URL = "https://vast-fortress-99365.herokuapp.com/";
     public static String PARENT_BASE = BASE_URL + "parent/";
-    private static SharedPreferences chorePrefs;
+    protected static SharedPreferences chorePrefs;
     private static final String TOKEN_KEY = "token";
 
 
@@ -105,7 +104,7 @@ public class ParentChoreService {
                 .build().create(ParentAPI.class);
     }
 
-    interface ParentAPI{
+    public interface ParentAPI{
         @GET("children")
         Call<ArrayList<Child>> getChildren(@Header(TOKEN_KEY) String token);
 

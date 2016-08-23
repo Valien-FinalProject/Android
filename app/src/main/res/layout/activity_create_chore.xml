@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.theironyard.finalproject.CreateChoreActivity">
+    tools:context=".activities.CreateChoreActivity">
 
     <Button
         android:layout_width="fill_parent"

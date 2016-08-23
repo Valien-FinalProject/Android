@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;

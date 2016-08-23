@@ -1,4 +1,5 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
+
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.theironyard.finalproject.services.ParentChoreService;
+import com.theironyard.finalproject.R;
 import com.theironyard.finalproject.representations.Child;
 import com.theironyard.finalproject.representations.Chore;
 
@@ -428,7 +431,13 @@ public class ParentProfileActivity extends AppCompatActivity
         }
     };
 
+    AdapterView.OnItemLongClickListener onPendingChoresList = new AdapterView.OnItemLongClickListener(){
 
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            return false;
+        }
+    };
 //        String[]  myStringArray3={"Chore1","Chore2","Chore3"};
 //        ArrayAdapter<String> myAdapter3=new
 //                ArrayAdapter<String>(
@@ -438,6 +447,4 @@ public class ParentProfileActivity extends AppCompatActivity
 //        ListView myList3=(ListView)
 //                findViewById(R.id.pProfileChoresCompletedListView);
 //        myList3.setAdapter(myAdapter3);
-
-
 }

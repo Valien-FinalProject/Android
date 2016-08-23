@@ -1,6 +1,5 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,14 +11,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.theironyard.finalproject.command.RewardCommand;
-import com.theironyard.finalproject.command.UserCommand;
-import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.representations.Reward;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import butterknife.Bind;
+import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.services.ParentChoreService;
+
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
