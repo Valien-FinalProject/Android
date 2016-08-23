@@ -15,43 +15,43 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateChildActivity"/>
-        <activity android:name=".CreateParentActivity"/>
+        <activity android:name=".activities.CreateChildActivity"/>
+        <activity android:name=".activities.CreateParentActivity"/>
         <activity
-            android:name=".ParentProfileActivity"
+            android:name=".activities.ParentProfileActivity"
             android:label="@string/title_activity_parent_profile"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CreateChoreActivity"/>
+        <activity android:name=".activities.CreateChoreActivity"/>
         <activity
-            android:name=".ChildProfileActivity"
+            android:name=".activities.ChildProfileActivity"
             android:label="ChildProfileActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".CreateRewardActivity"/>
-        <activity android:name=".ParentViewWishlistActivity">
+        <activity android:name=".activities.CreateRewardActivity"/>
+        <activity android:name=".activities.ParentViewWishlistActivity">
         </activity>
-        <activity android:name=".ParentViewChoresActivity">
+        <activity android:name=".activities.ParentViewChoresActivity">
         </activity>
-        <activity android:name=".UpdateProfileActivity">
+        <activity android:name=".activities.UpdateProfileActivity">
         </activity>
-        <activity android:name=".CreateWishlistItemActivity">
+        <activity android:name=".activities.CreateWishlistItemActivity">
         </activity>
-        <activity android:name=".EditRewardActivity">
+        <activity android:name=".activities.EditRewardActivity">
         </activity>
-        <activity android:name=".HomeActivity">
+        <activity android:name=".activities.HomeActivity">
         </activity>
-        <activity android:name=".CalendarActivity">
+        <activity android:name=".activities.CalendarActivity">
         </activity>
         <activity android:name=".TestActivity">
         </activity>
-        <activity android:name=".ChildViewChoresActivity">
+        <activity android:name=".activities.ChildViewChoresActivity">
         </activity>
-        <activity android:name=".ChildViewWishlistActivity">
+        <activity android:name=".activities.ChildViewWishlistActivity">
         </activity>
-        <activity android:name=".RegistrationActivity">
+        <activity android:name=".activities.RegistrationActivity">
         </activity>
-        <activity android:name=".ParentLoginActivity">
+        <activity android:name=".activities.ParentLoginActivity">
         </activity>
-        <activity android:name=".ChildLoginActivity">
+        <activity android:name=".activities.ChildLoginActivity">
         </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

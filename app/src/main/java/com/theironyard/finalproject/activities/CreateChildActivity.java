@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,7 +12,8 @@ import android.widget.EditText;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.theironyard.finalproject.command.TokenCommand;
+import com.theironyard.finalproject.services.ParentChoreService;
+import com.theironyard.finalproject.R;
 import com.theironyard.finalproject.command.UserCommand;
 
 import butterknife.Bind;

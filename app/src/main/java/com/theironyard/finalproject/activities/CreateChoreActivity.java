@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -9,17 +9,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.theironyard.finalproject.command.ChoreCommand;
-import com.theironyard.finalproject.command.UserCommand;
-import com.theironyard.finalproject.representations.Chore;
 
-import java.util.ArrayList;
+import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.services.ParentChoreService;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class CreateChoreActivity extends AppCompatActivity {
 
