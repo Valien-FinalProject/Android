@@ -19,9 +19,9 @@ public class ChoreCommand {
     public ChoreCommand() {
     }
 
-    public ChoreCommand(String description, String name, int value) {
-        this.description = description;
+    public ChoreCommand(String name, String description, int value) {
         this.name = name;
+        this.description = description;
         this.value = value;
     }
 

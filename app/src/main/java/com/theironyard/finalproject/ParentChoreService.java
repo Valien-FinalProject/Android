@@ -3,6 +3,7 @@ package com.theironyard.finalproject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.theironyard.finalproject.command.ChoreCommand;
 import com.theironyard.finalproject.command.RewardCommand;
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
@@ -54,6 +55,10 @@ public class ParentChoreService {
 
     public static void saveReward(RewardCommand rewardCommand){
         getEditor().putString("rewardCommand", String.valueOf(rewardCommand)).commit();
+    }
+
+    public static void saveChore(ChoreCommand choreCommand){
+        getEditor().putString("choreCommand", String.valueOf(choreCommand)).commit();
     }
 
     private static SharedPreferences.Editor getEditor(){
@@ -127,43 +132,12 @@ public class ParentChoreService {
         @GET("rewards")
         Call<ArrayList<Reward>> getParentRewards(@Header(TOKEN_KEY) String token);
 
+        @POST("chore")
+        Call<ArrayList<Chore>> getChoreInfo(@Body ChoreCommand choreCommand);
+
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);
 
     }
-//    /************************************
-//     * Register Parent
-//     ************************************/
-//
-//    public RegisterParent getRegisterParentAPI() throws Exception {
-//
-//        String token = ParentChoreService.getCurrentToken();
-//        if(token == null){
-//            throw new Exception("Cannot use api without a token");
-//        }
-//
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        Request request = chain.request().newBuilder()
-//                                .addHeader("Authorization", "Bearer " + ParentChoreService.getCurrentToken())
-//                                .build();
-//                        return chain.proceed(request);
-//                    }
-//                }).build();
-//
-//        return new Retrofit.Builder()
-//                .client(client)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .baseUrl(PARENT_BASE)
-//                .build().create(RegisterParent.class);
-//    }
-//
-//    interface RegisterParent{
-//        @POST("register")
-//        Call<UserCommand> getParentInfo(@Body UserCommand user);
-//    }
-
 }
 

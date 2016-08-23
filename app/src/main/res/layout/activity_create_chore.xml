@@ -20,8 +20,17 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/createChoreDescText"
+        android:id="@+id/createChoreNameText"
         android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Chore Name" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/createChoreDescText"
+        android:layout_below="@+id/createChoreNameText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:hint="Chore Description" />
@@ -29,26 +38,17 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/createChoreStartText"
+        android:id="@+id/createChoreValueText"
         android:layout_below="@+id/createChoreDescText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="Start Date" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/createChoreEndText"
-        android:layout_below="@+id/createChoreStartText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="End Date" />
+        android:hint="Chore Value" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/createChoreEndText"
+        android:layout_below="@+id/createChoreValueText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout">

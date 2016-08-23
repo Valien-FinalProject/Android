@@ -262,6 +262,8 @@ public class ParentProfileActivity extends AppCompatActivity
             startCreateChild();
         } else if (id == R.id.nav_create_chore) {
             startCreateChores();
+        }else if (id == R.id.nav_create_reward){
+            startCreateRewards();
         }else if (id == R.id.nav_update) {
             startUpdateProfile();
         }
@@ -293,6 +295,11 @@ public class ParentProfileActivity extends AppCompatActivity
 
     private void startCreateChores() {
         Intent intent = new Intent(this, CreateChoreActivity.class);
+        startActivity(intent);
+    }
+
+    private void startCreateRewards(){
+        Intent intent = new Intent(this, CreateRewardActivity.class);
         startActivity(intent);
     }
 
