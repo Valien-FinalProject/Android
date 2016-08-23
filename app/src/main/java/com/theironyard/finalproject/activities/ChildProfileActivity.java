@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.theironyard.finalproject.R;
 
 import butterknife.ButterKnife;
 

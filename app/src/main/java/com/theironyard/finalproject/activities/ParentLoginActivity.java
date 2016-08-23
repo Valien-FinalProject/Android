@@ -1,4 +1,4 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.theironyard.finalproject.services.ParentChoreService;
+import com.theironyard.finalproject.R;
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
 

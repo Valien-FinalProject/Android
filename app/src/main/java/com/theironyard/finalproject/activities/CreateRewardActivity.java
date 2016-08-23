@@ -1,9 +1,11 @@
-package com.theironyard.finalproject;
+package com.theironyard.finalproject.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.theironyard.finalproject.R;
 
 import butterknife.ButterKnife;
 
