@@ -77,7 +77,7 @@ public class ParentChoreService {
                 .build().create(Login.class);
     }
 
-    interface Login{
+    public interface Login{
         @POST("token")
         Call<TokenCommand> getParentToken(@Body UserCommand user);
     }

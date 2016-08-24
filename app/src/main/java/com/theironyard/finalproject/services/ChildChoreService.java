@@ -66,7 +66,7 @@ public class ChildChoreService {
                 .build().create(Login.class);
     }
 
-    interface Login{
+    public interface Login{
         @POST("token")
         Call<TokenCommand> getChildToken(@Body UserCommand user);
     }
@@ -98,7 +98,7 @@ public class ChildChoreService {
                 .build().create(ChildAPI.class);
     }
 
-    interface ChildAPI{
+    public interface ChildAPI{
         @GET("chores")
         Call<ArrayList<Chore>> getChores();
     }
