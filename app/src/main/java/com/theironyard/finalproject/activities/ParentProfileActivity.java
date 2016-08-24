@@ -435,13 +435,4 @@ public class ParentProfileActivity extends AppCompatActivity
             return false;
         }
     };
-//        String[]  myStringArray3={"Chore1","Chore2","Chore3"};
-//        ArrayAdapter<String> myAdapter3=new
-//                ArrayAdapter<String>(
-//                this,
-//                android.R.layout.simple_list_item_1,
-//                myStringArray);
-//        ListView myList3=(ListView)
-//                findViewById(R.id.pProfileChoresCompletedListView);
-//        myList3.setAdapter(myAdapter3);
 }

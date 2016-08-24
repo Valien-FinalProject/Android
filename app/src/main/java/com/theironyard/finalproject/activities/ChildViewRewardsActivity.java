@@ -26,7 +26,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.test_menu, menu);
+        inflater.inflate(R.menu.child_menu, menu);
         return true;
     }
 
@@ -44,7 +44,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
             return true;
         }
         else if(id == R.id.wishlist){
-            startChildViewWishlistActivity();
+            startCreateWishlistItemActivity();
             return true;
         }
         else if(id == R.id.chores){
@@ -67,8 +67,8 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChildViewRewardsActivity.class);
         startActivity(intent);
     }
-    private void startChildViewWishlistActivity() {
-        Intent intent = new Intent(this, ChildViewWishlistActivity.class);
+    private void startCreateWishlistItemActivity() {
+        Intent intent = new Intent(this, CreateWishlistItemActivity.class);
         startActivity(intent);
     }
     private void startChildViewChoresActivity() {
@@ -76,7 +76,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void startChildLogoutActivity() {
-        Intent intent = new Intent(this, ChildProfileActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 }

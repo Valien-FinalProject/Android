@@ -25,6 +25,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -133,6 +134,13 @@ public class ParentChoreService {
 
         @POST("chore")
         Call<ChoreCommand> getChoreInfo(@Body ChoreCommand choreCommand);
+
+        @GET("child/{id}/wishlist")
+        Call<ArrayList<Reward>> getChildWishlist(@Header(TOKEN_KEY) String token, @Path("id") int id);
+
+        @PUT("child/{childId}/wishlist/{rewardId}")
+        Call<RewardCommand> updateRewardInfo(@Body RewardCommand rewardCommand,
+                                             @Path("childId") int childId, @Path("rewardId") int rewardId);
 
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);

@@ -10,8 +10,7 @@ import android.view.MenuItem;
 import com.theironyard.finalproject.activities.ChildProfileActivity;
 import com.theironyard.finalproject.activities.ChildViewChoresActivity;
 import com.theironyard.finalproject.activities.ChildViewRewardsActivity;
-import com.theironyard.finalproject.activities.ChildViewWishlistActivity;
-import com.theironyard.finalproject.activities.ParentViewChoresActivity;
+import com.theironyard.finalproject.old.ChildViewWishlistActivity;
 
 public class TestActivity extends AppCompatActivity {
 
@@ -24,7 +23,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.test_menu, menu);
+        inflater.inflate(R.menu.child_menu, menu);
         return true;
     }
 

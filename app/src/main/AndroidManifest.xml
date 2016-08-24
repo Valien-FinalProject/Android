@@ -44,7 +44,7 @@
         <activity android:name=".TestActivity">
         </activity>
         <activity android:name=".activities.ChildViewChoresActivity"/>
-        <activity android:name=".activities.ChildViewWishlistActivity">
+        <activity android:name=".old.ChildViewWishlistActivity">
         </activity>
         <activity android:name=".activities.RegistrationActivity">
         </activity>
@@ -61,6 +61,8 @@
             android:value="@integer/google_play_services_version"/>
 
         <activity android:name=".activities.ChildViewRewardsActivity">
+        </activity>
+        <activity android:name=".activities.ChildLogoutActivity">
         </activity>
     </application>
 

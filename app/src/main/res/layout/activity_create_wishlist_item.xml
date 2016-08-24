@@ -18,19 +18,18 @@
         <SearchView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/searchView"/>
+            android:id="@+id/searchWalmartView"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Search Amazon"
-            android:id="@+id/searchAmazonButton"/>
+            android:text="Search Walmart"
+            android:id="@+id/searchWalmartButton"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="300dp">
-        </LinearLayout>
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="270dp"
+            android:id="@+id/searchWalmartListView"/>
 
     </LinearLayout>
 
@@ -41,5 +40,6 @@
         android:id="@+id/addItemToWishlistButton"
         android:layout_alignParentTop="false"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="false"/>
 </RelativeLayout>

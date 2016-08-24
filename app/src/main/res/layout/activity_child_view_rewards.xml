@@ -43,4 +43,24 @@
         android:textAlignment="center"
         android:textSize="18sp"
         android:background="#9da6fa"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cash In"
+        android:id="@+id/childViewRewardsCashInButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:nestedScrollingEnabled="false"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/childViewRewardsListView"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/childViewRewardsCashInButton"
+        android:choiceMode="singleChoice"
+        android:listSelector="#f9f5d2"/>
 </RelativeLayout>

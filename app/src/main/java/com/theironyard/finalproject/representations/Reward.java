@@ -9,6 +9,7 @@ public class Reward {
     private String description;
     private String url;
     private int points;
+    private int id;
 
     public String getName() {
         return name;
@@ -40,5 +41,13 @@ public class Reward {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
