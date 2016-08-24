@@ -82,11 +82,11 @@ public class CreateChildActivity extends AppCompatActivity implements View.OnCli
                             if (response.code() == 200) {
                                 UserCommand userCommand = response.body();
                                 ParentChoreService.saveUser(userCommand);
-                                Snackbar.make(mCreateChildButton,"You have created a new child!", Snackbar.LENGTH_LONG);
+                                Snackbar.make(mCreateChildButton,"You have created a new child!", Snackbar.LENGTH_LONG).show();
                                 setDefaultValues();
                                 startActivity(new Intent(CreateChildActivity.this, ParentProfileActivity.class));
                             } else {
-                                Snackbar.make(mCreateChildButton, "Unable to Create New Child.Try again", Snackbar.LENGTH_LONG);
+                                Snackbar.make(mCreateChildButton, "Unable to Create New Child.Try again", Snackbar.LENGTH_LONG).show();
                             }
                         }
 

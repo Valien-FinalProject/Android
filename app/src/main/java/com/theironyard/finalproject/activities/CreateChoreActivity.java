@@ -1,5 +1,7 @@
 package com.theironyard.finalproject.activities;
 
+import android.support.v7.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +13,17 @@ import android.widget.EditText;
 import com.theironyard.finalproject.command.ChoreCommand;
 
 import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.services.ParentChoreService;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CreateChoreActivity extends AppCompatActivity {
 
@@ -47,31 +55,31 @@ public class CreateChoreActivity extends AppCompatActivity {
         int value = Integer.parseInt(mValue.getText().toString());
         final ChoreCommand choreCommand = new ChoreCommand(name, description, value);
 
-//        try {
-//            ParentChoreService.getParentApi().getChoreInfo(choreCommand)
-//                    .enqueue(new Callback<ChoreCommand>() {
-//                        @Override
-//                        public void onResponse(Call<ChoreCommand> call, Response<ChoreCommand> response) {
-//                            if (response.code() == 200) {
-//                                ChoreCommand choreCommand = response.body();
-//                                ParentChoreService.saveChore(choreCommand);
-//                                Snackbar.make(mButton, "You have created a new chore!", Snackbar.LENGTH_LONG);
-//                                setDefaultValues();
-//                                startActivity(new Intent(CreateChoreActivity.this, ParentProfileActivity.class));
-//                            } else {
-//                                Snackbar.make(mButton, "Unable to Create New Chore.Try again", Snackbar.LENGTH_LONG);
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ChoreCommand> call, Throwable t) {
-//
-//                        }
-//                    });
-//
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try{
+            parentChoreService.getParentApi().getChoreInfo(choreCommand)
+                    .enqueue(new Callback<ChoreCommand>() {
+                        @Override
+                        public void onResponse(Call<ChoreCommand> call, Response<ChoreCommand> response) {
+                            if (response.code() == 200) {
+                                ChoreCommand choreCommand = response.body();
+                                ParentChoreService.saveChore(choreCommand);
+                                Snackbar.make(mButton, "You have created a new chore!", Snackbar.LENGTH_LONG).show();
+                                setDefaultValues();
+                                startActivity(new Intent(CreateChoreActivity.this, ParentProfileActivity.class));
+                            } else {
+                                Snackbar.make(mButton, "Unable to Create New Chore.Try again", Snackbar.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ChoreCommand> call, Throwable t) {
+
+                        }
+                    });
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     public void setDefaultValues() {
         mName.setText("");

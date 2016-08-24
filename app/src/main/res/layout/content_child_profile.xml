@@ -12,56 +12,46 @@
                 tools:context=".activities.ChildProfileActivity"
                 tools:showIn="@layout/app_bar_child_profile">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chores Left To Do Today"
-        android:id="@+id/textView14"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center"
-        android:background="#f9bcbc"
-        android:textStyle="bold"/>
+        android:id="@+id/linearLayout4">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="135dp"
-        android:id="@+id/pProfileChoresTodayListView"
-        android:layout_below="@+id/textView14"
-        android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current Point Total:"
+            android:id="@+id/textView6"
+            android:textSize="18sp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView15"
-        android:layout_below="@+id/pProfileChoresTodayListView"
-        android:layout_centerHorizontal="true"
-        android:text="Chores Pending Approval"
-        android:textAlignment="center"
-        android:background="#faf8d3"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="135dp"
-        android:id="@+id/pProfileChoresPendingListView"
-        android:layout_below="@+id/textView15"
-        android:layout_centerHorizontal="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/childProfilePointTotalText"
+            android:hint="Total Points"
+            android:textSize="18sp"/>
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chores Completed Today"
-        android:id="@+id/textView16"
-        android:layout_below="@+id/pProfileChoresPendingListView"
-        android:layout_centerHorizontal="true"
+        android:text="Chores For Today"
+        android:id="@+id/textView5"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:textAlignment="center"
-        android:background="#9bfaa0"
+        android:background="#f8c9c9"
+        android:textSize="18sp"
         android:textStyle="bold"/>
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="135dp"
-        android:id="@+id/pProfileChoresCompletedListView"
-        android:layout_below="@+id/textView16"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="wrap_content"
+        android:id="@+id/childProfileChoresListView"
+        android:layout_below="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
 </RelativeLayout>
