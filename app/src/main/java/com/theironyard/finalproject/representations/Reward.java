@@ -5,6 +5,7 @@ package com.theironyard.finalproject.representations;
  */
 public class Reward {
 
+    private int id;
     private String name;
     private String description;
     private String url;

@@ -7,6 +7,7 @@ import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
 import com.theironyard.finalproject.representations.Child;
 import com.theironyard.finalproject.representations.Chore;
+import com.theironyard.finalproject.representations.Reward;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class ChildChoreService {
                 .build().create(Login.class);
     }
 
-    interface Login{
+    public interface Login{
         @POST("token")
         Call<TokenCommand> getChildToken(@Body UserCommand user);
     }
@@ -98,9 +99,16 @@ public class ChildChoreService {
                 .build().create(ChildAPI.class);
     }
 
-    interface ChildAPI{
+    public interface ChildAPI{
         @GET("chores")
         Call<ArrayList<Chore>> getChores();
+
+        @GET("points")
+        Call<Integer> getPoints();
+
+        @GET("rewards")
+        Call<ArrayList<Reward>> getRewards();
+
     }
 
 

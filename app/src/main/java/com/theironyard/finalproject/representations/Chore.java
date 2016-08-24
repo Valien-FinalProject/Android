@@ -7,6 +7,7 @@ import java.sql.Timestamp;
  */
 public class Chore {
 
+    private int id;
     private Timestamp startDate;
     private Timestamp endDate;
     private String name;
@@ -51,5 +52,13 @@ public class Chore {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
