@@ -46,8 +46,6 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
         setContentView(R.layout.activity_create_reward);
         ButterKnife.bind(this);
 
-        mButton.setOnClickListener(this);
-
         ParentChoreService parentChoreService = new ParentChoreService();
         final String token = "token " + parentChoreService.getCurrentToken();
         try {

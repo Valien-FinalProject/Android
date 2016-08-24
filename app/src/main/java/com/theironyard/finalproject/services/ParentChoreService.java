@@ -77,7 +77,7 @@ public class ParentChoreService {
                 .build().create(Login.class);
     }
 
-    interface Login{
+    public interface Login{
         @POST("token")
         Call<TokenCommand> getParentToken(@Body UserCommand user);
     }
@@ -132,7 +132,7 @@ public class ParentChoreService {
         Call<ArrayList<Reward>> getParentRewards(@Header(TOKEN_KEY) String token);
 
         @POST("chore")
-        Call<ArrayList<Chore>> getChoreInfo(@Body ChoreCommand choreCommand);
+        Call<ChoreCommand> getChoreInfo(@Body ChoreCommand choreCommand);
 
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);
