@@ -80,115 +80,7 @@ public class ParentProfileActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        AdapterView.OnItemSelectedListener onSpinner =  new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                int childId = childMap.get(topSpinner.getSelectedItem().toString());
-                /*******************************************
-                 * Today's Chores ListView and ArrayAdapter
-                 *******************************************/
-
-                try {
-                    Call<ArrayList<Chore>> callCurrentChores = parentChoreService.getParentApi().getCurrentChores(token, 8);
-                    callCurrentChores.enqueue(new Callback<ArrayList<Chore>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                            ArrayList<Chore> chores = response.body();
-                            ArrayList<String> choreNames = new ArrayList<>();
-                            Iterator<Chore> choreNamesIterator = chores.iterator();
-                            while(choreNamesIterator.hasNext()){
-                                choreNames.add(choreNamesIterator.next().getName());
-                            }
-                            ArrayAdapter<String> stringArrayAdapter=
-                                    new ArrayAdapter<>(ParentProfileActivity.this,
-                                            android.R.layout.simple_list_item_1,
-                                            choreNames);
-                            ListView myList=(ListView)
-                                    findViewById(R.id.pProfileChoresTodayListView);
-                            myList.setAdapter(stringArrayAdapter);
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                /*******************************************
-                 * Pending Chores ListView and ArrayAdapter
-                 *******************************************/
-
-                try {
-                    Call<ArrayList<Chore>> callPendingChores = parentChoreService.getParentApi().getPendingChores(token, childId);
-                    callPendingChores.enqueue(new Callback<ArrayList<Chore>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                            ArrayList<Chore> chores = response.body();
-                            ArrayList<String> choreNames = new ArrayList<>();
-                            Iterator<Chore> choreNamesIterator = chores.iterator();
-                            while(choreNamesIterator.hasNext()){
-                                choreNames.add(choreNamesIterator.next().getName());
-                            }
-                            ArrayAdapter<String> stringArrayAdapter=
-                                    new ArrayAdapter<>(ParentProfileActivity.this,
-                                            android.R.layout.simple_list_item_1,
-                                            choreNames);
-                            ListView myList=(ListView)
-                                    findViewById(R.id.pProfileChoresPendingListView);
-                            myList.setAdapter(stringArrayAdapter);
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                /****************************************************
-                 * Today's Completed Chores ListView and ArrayAdapter
-                 ****************************************************/
-
-                try {
-                    Call<ArrayList<Chore>> callCompletedChores = parentChoreService.getParentApi().getCompletedChores(token, childId);
-                    callCompletedChores.enqueue(new Callback<ArrayList<Chore>>() {
-                        @Override
-                        public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                            ArrayList<Chore> chores = response.body();
-                            ArrayList<String> choreNames = new ArrayList<>();
-                            Iterator<Chore> choreNamesIterator = chores.iterator();
-                            while(choreNamesIterator.hasNext()){
-                                choreNames.add(choreNamesIterator.next().getName());
-                            }
-                            ArrayAdapter<String> stringArrayAdapter=
-                                    new ArrayAdapter<>(ParentProfileActivity.this,
-                                            android.R.layout.simple_list_item_1,
-                                            choreNames);
-                            ListView myList=(ListView)
-                                    findViewById(R.id.pProfileChoresCompletedListView);
-                            myList.setAdapter(stringArrayAdapter);
-                        }
-
-                        @Override
-                        public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        };
+        topSpinner.setOnItemSelectedListener(onSpinner);
 
         /************************************
          * Navigation
@@ -212,7 +104,6 @@ public class ParentProfileActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        topSpinner.setOnItemSelectedListener(onSpinner);
     }
 
     @Override

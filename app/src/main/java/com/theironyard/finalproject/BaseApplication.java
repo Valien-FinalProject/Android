@@ -2,6 +2,7 @@ package com.theironyard.finalproject;
 
 import android.app.Application;
 
+import com.theironyard.finalproject.services.ChildChoreService;
 import com.theironyard.finalproject.services.ParentChoreService;
 
 /**
@@ -14,5 +15,6 @@ public class BaseApplication extends Application {
         super.onCreate();
 
         ParentChoreService.initChorePrefs(this);
+        ChildChoreService.initChorePrefs(this);
     }
 }

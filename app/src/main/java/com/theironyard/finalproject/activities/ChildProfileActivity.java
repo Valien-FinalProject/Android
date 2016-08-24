@@ -14,37 +14,101 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.representations.Chore;
+import com.theironyard.finalproject.services.ChildChoreService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChildProfileActivity extends AppCompatActivity {
 
 //public class ChildProfileActivity extends AppCompatActivity
 //        implements NavigationView.OnNavigationItemSelectedListener {
+    final ChildChoreService childChoreService = new ChildChoreService();
+    final Map<String, Integer> childMap = new HashMap<>();
+
+    String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_profile);
         ButterKnife.bind(this);
+        token = "token" + childChoreService.getCurrentToken();
+
+        /*******************************************
+         * Child's Total Points
+         *******************************************/
+
+        Call<Integer> callChildPoints = null;
+        try {
+            callChildPoints = childChoreService.getChildApi().getPoints();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        callChildPoints.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                int childPoints = response.body();
+
+                TextView pointText = (TextView)findViewById(R.id.childProfilePointTotalText);
+                pointText.setText(Integer.toString(childPoints));
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
 
         /*******************************************
          * Today's Chores ListView and ArrayAdapter
          *******************************************/
 
-        String[] myStringArray = {"Chore1", "Chore2", "Chore3"};
-        ArrayAdapter<String> myAdapter = new
-                ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                myStringArray);
-        ListView myList = (ListView)
-                findViewById(R.id.childProfileChoresListView);
-        myList.setAdapter(myAdapter);
+        Call<ArrayList<Chore>> callCurrentChores = null;
+        try {
+            callCurrentChores = childChoreService.getChildApi().getChores();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        callCurrentChores.enqueue(new Callback<ArrayList<Chore>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Chore>> call, Response<ArrayList<Chore>> response) {
+
+                ArrayList<Chore> chores = response.body();
+                ArrayList<String> choreNames = new ArrayList<>();
+
+                for (Chore chore : chores){
+                    choreNames.add(chore.getName());
+                    childMap.put(chore.getName(), chore.getId());
+                }
+
+                ArrayAdapter<String> stringArrayAdapter =
+                        new ArrayAdapter<String>(ChildProfileActivity.this,
+                                android.R.layout.simple_list_item_1,
+                                choreNames);
+                ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
+                myList.setAdapter(stringArrayAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
+            }
+        });
 
     }
     /************************************

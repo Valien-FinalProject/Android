@@ -5,6 +5,7 @@ package com.theironyard.finalproject.representations;
  */
 public class Reward {
 
+    private int id;
     private String name;
     private String description;
     private String url;
@@ -40,5 +41,13 @@ public class Reward {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
