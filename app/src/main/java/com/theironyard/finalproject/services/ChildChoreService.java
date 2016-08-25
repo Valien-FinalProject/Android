@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by vasantia on 8/19/16.
@@ -109,6 +110,8 @@ public class ChildChoreService {
         @GET("rewards")
         Call<ArrayList<Reward>> getRewards();
 
+        @GET("deduct")
+        Call<Child> deductPoints(@Body int id);
     }
 
 

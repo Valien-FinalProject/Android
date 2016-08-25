@@ -1,16 +1,21 @@
 package com.theironyard.finalproject.activities;
 
+import android.app.LauncherActivity;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.representations.Child;
 import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.representations.Reward;
 import com.theironyard.finalproject.services.ChildChoreService;
@@ -28,11 +33,15 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
+    Button cashInButton;
+    TextView pointText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view_rewards);
+        cashInButton = (Button)findViewById(R.id.childViewRewardsCashInButton);
+        cashInButton.setOnClickListener(cashIn);
         ButterKnife.bind(this);
 
         Call<Integer> callChildPoints = null;
@@ -51,7 +60,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 int childPoints = response.body();
 
-                TextView pointText = (TextView)findViewById(R.id.childViewRewardsTotalPointsText);
+                pointText = (TextView)findViewById(R.id.childViewRewardsTotalPointsText);
                 pointText.setText(Integer.toString(childPoints));
             }
 
@@ -88,7 +97,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
                         new ArrayAdapter<>(ChildViewRewardsActivity.this,
                                 android.R.layout.simple_list_item_1,
                                 choreNames);
-                ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
+                ListView myList = (ListView) findViewById(R.id.childViewRewardsListView);
                 myList.setAdapter(stringArrayAdapter);
             }
 
@@ -136,6 +145,39 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    View.OnClickListener cashIn = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            ListView rewardsList = (ListView)findViewById(R.id.childViewRewardsListView);
+            Reward selectedReward = (Reward)rewardsList.getSelectedItem();
+
+            int childPoints = Integer.parseInt(pointText.toString());
+
+            if (childPoints < selectedReward.getPoints()){
+                Snackbar.make(view, "You do not have enough points for this Reward!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }else {
+                try {
+                    Call<Child> callDeductChildPoints = childChoreService.getChildApi().deductPoints(childPoints);
+                    callDeductChildPoints.enqueue(new Callback<Child>() {
+                        @Override
+                        public void onResponse(Call<Child> call, Response<Child> response) {
+                        }
+
+                        @Override
+                        public void onFailure(Call<Child> call, Throwable t) {
+                        }
+                    });
+                    pointText.setText(childPoints - selectedReward.getPoints());
+                } catch (Exception e) {
+                    Snackbar.make(view, "Uh oh, we were not able to deduct your points!", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 
     private void startChildProfileActivity() {
         Intent intent = new Intent(this, ChildProfileActivity.class);
