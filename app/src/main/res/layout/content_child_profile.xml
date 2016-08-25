@@ -16,7 +16,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout4">
+        android:id="@+id/linearLayout4"
+        android:layout_below="@+id/childProfileChoreSpinner">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chores For Today"
+        android:text="Chores"
         android:id="@+id/textView5"
         android:layout_below="@+id/linearLayout4"
         android:layout_alignParentLeft="true"
@@ -53,5 +54,13 @@
         android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/childProfileChoreSpinner"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10dp"/>
 
 </RelativeLayout>

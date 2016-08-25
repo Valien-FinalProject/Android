@@ -6,11 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-<<<<<<< HEAD
-=======
-import android.view.View;
-import android.widget.AdapterView;
->>>>>>> ross
+
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;

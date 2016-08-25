@@ -142,6 +142,9 @@ public class ParentChoreService {
         Call<RewardCommand> updateRewardInfo(@Body RewardCommand rewardCommand,
                                              @Path("childId") int childId, @Path("rewardId") int rewardId);
 
+        @PUT("profile")
+        Call<UserCommand> updateParentInfo(@Body UserCommand user);
+
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);
 
