@@ -19,16 +19,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Current Point Total:"
-            android:id="@+id/textView8"
-            android:textSize="18sp"/>
+            android:id="@+id/childViewRewardsTotalPointsText"
+            android:hint="Total Points"
+            android:textSize="22sp"
+            android:textColor="#059f14"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/childViewRewardsTotalPointsText"
-            android:hint="Total Points"
-            android:textSize="18sp"/>
+            android:text=" points"
+            android:id="@+id/textView8"
+            android:textSize="20sp"/>
+
     </LinearLayout>
 
     <TextView
