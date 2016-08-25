@@ -44,7 +44,7 @@ public class ChildProfileActivity extends AppCompatActivity {
 
         Call<Integer> callChildPoints = null;
         try {
-            callChildPoints = childChoreService.getChildApi().getPoints();
+            callChildPoints = childChoreService.getChildApi().getPoints(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class ChildProfileActivity extends AppCompatActivity {
 
         Call<ArrayList<Chore>> callCurrentChores = null;
         try {
-            callCurrentChores = childChoreService.getChildApi().getChores();
+            callCurrentChores = childChoreService.getChildApi().getChores(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
