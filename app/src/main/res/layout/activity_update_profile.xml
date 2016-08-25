@@ -39,7 +39,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/UpdateProfilePasswordText"
+        android:id="@+id/updateProfilePasswordText"
         android:layout_below="@+id/updateProfileNameText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/updateProfileConfirmPasswordText"
-        android:layout_below="@+id/UpdateProfilePasswordText"
+        android:layout_below="@+id/updateProfilePasswordText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:hint="Confirm Password"
@@ -76,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Opt-In"
-            android:id="@+id/updateProfileOptInCheckBox"
+            android:id="@+id/updateProfileEmailOptInCheckBox"
             android:checked="false"/>
     </LinearLayout>
 
