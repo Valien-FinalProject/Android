@@ -56,7 +56,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.regButton)
+    @OnClick(R.id.updateProfileButton)
     public void onClick(View view) {
 
         ParentChoreService parentChoreService = new ParentChoreService();
