@@ -26,8 +26,6 @@ import retrofit2.Response;
 
 public class ChildProfileActivity extends AppCompatActivity {
 
-//public class ChildProfileActivity extends AppCompatActivity
-//        implements NavigationView.OnNavigationItemSelectedListener {
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
 
@@ -90,7 +88,7 @@ public class ChildProfileActivity extends AppCompatActivity {
                 }
 
                 ArrayAdapter<String> stringArrayAdapter =
-                        new ArrayAdapter<String>(ChildProfileActivity.this,
+                        new ArrayAdapter<>(ChildProfileActivity.this,
                                 android.R.layout.simple_list_item_1,
                                 choreNames);
                 ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
@@ -162,6 +160,7 @@ public class ChildProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
+
 }
         /************************************
          * OLD Navigation
