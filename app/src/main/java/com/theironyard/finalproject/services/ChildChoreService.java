@@ -21,6 +21,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -102,16 +103,16 @@ public class ChildChoreService {
 
     public interface ChildAPI{
         @GET("chores")
-        Call<ArrayList<Chore>> getChores();
+        Call<ArrayList<Chore>> getChores(@Header(TOKEN_KEY) String token);
 
         @GET("points")
-        Call<Integer> getPoints();
+        Call<Integer> getPoints(@Header(TOKEN_KEY) String token);
 
         @GET("rewards")
-        Call<ArrayList<Reward>> getRewards();
+        Call<ArrayList<Reward>> getRewards(@Header(TOKEN_KEY) String token);
 
         @GET("deduct")
-        Call<Child> deductPoints(@Body int id);
+        Call<Child> deductPoints(@Header(TOKEN_KEY) String token, @Body int id);
     }
 
 

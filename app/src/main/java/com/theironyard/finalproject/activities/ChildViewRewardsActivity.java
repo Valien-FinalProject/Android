@@ -33,6 +33,8 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
+    String token = "token " + childChoreService.getCurrentToken();
+
     Button cashInButton;
     TextView pointText;
 
@@ -46,7 +48,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
         Call<Integer> callChildPoints = null;
         try {
-            callChildPoints = childChoreService.getChildApi().getPoints();
+            callChildPoints = childChoreService.getChildApi().getPoints(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,7 +78,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
         Call<ArrayList<Reward>> callCurrentRewards = null;
         try {
-            callCurrentRewards = childChoreService.getChildApi().getRewards();
+            callCurrentRewards = childChoreService.getChildApi().getRewards(token);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,7 +161,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }else {
                 try {
-                    Call<Child> callDeductChildPoints = childChoreService.getChildApi().deductPoints(childPoints);
+                    Call<Child> callDeductChildPoints = childChoreService.getChildApi().deductPoints(token, childPoints);
                     callDeductChildPoints.enqueue(new Callback<Child>() {
                         @Override
                         public void onResponse(Call<Child> call, Response<Child> response) {
