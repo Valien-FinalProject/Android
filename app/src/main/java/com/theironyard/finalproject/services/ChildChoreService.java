@@ -34,11 +34,21 @@ public class ChildChoreService {
     public static String CHILD_BASE = BASE_URL + "child/";
     private static SharedPreferences chorePrefs;
     private static final String TOKEN_KEY = "token";
+    protected static int CHILD_ID;
 
+
+    public static void setChildId (int id){
+        CHILD_ID = id;
+    }
+
+    public static int getChildId(){
+        return CHILD_ID;
+    }
 
     /*****************************************
      * SharedPrefs saving methods
      *****************************************/
+
     public static void initChorePrefs(Context context){
         chorePrefs = context.getSharedPreferences("chores", Context.MODE_PRIVATE);
     }
@@ -112,16 +122,20 @@ public class ChildChoreService {
         @GET("rewards")
         Call<ArrayList<Reward>> getRewards(@Header(TOKEN_KEY) String token);
 
+        @GET("wishlist")
+        Call<ArrayList<Reward>> getWishlist(@Header(TOKEN_KEY)String token);
+
+        @GET("{id}")
+        Call<Child> getChild(@Header(TOKEN_KEY)String token, @Path("id")int id);
+
+        @PUT("chore/{id}/pending")
+        Call<Child> changeToPending(@Header(TOKEN_KEY)String token, @Path("id")int id);
+
         @PUT("reward/{id}/deduct")
         Call<Child> deductPoints(@Header(TOKEN_KEY) String token, @Path("id") int id);
 
         @POST("wishlist")
         Call<Reward> addToWishList(@Header(TOKEN_KEY) String token, @Body String name);
-
-        @GET("wishlist")
-        Call<ArrayList<Reward>> getWishlist(@Header(TOKEN_KEY)String token);
     }
-
-
 }
 

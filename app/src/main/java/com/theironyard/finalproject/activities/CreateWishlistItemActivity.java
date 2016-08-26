@@ -27,6 +27,8 @@ import retrofit2.Response;
 
 public class CreateWishlistItemActivity extends AppCompatActivity {
 
+
+
     final ChildChoreService childChoreService = new ChildChoreService();
     String token = "token " + childChoreService.getCurrentToken();
 
@@ -39,6 +41,7 @@ public class CreateWishlistItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_wishlist_item);
+        setTitle("Wish List");
 
         searchView = (android.widget.SearchView) findViewById(R.id.searchWalmartView);
         SearchListView = (ListView)findViewById(R.id.searchWalmartListView);

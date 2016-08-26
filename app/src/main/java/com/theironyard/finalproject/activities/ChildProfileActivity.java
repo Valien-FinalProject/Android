@@ -1,22 +1,28 @@
 package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.theironyard.finalproject.R;
+import com.theironyard.finalproject.representations.Child;
 import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.services.ChildChoreService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -24,19 +30,51 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChildProfileActivity extends AppCompatActivity {
+public class ChildProfileActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener {
 
+    ListView choreList;
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
+    Map<String, Chore> choreMap = new HashMap<>();
+    ArrayList<Chore> chores;
+    SimpleAdapter adapter;
 
     String token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_child_profile);
         ButterKnife.bind(this);
         token = "token" + childChoreService.getCurrentToken();
+        choreList = (ListView) findViewById(R.id.childProfileChoresListView);
+        choreList.setOnItemLongClickListener(this);
+
+
+        /*****************************************
+         * Get the Child's name and change Title.
+         *****************************************/
+
+        Call<Child> callChild = null;
+        try {
+            callChild = childChoreService.getChildApi().getChild(token, childChoreService.getChildId());
+            callChild.enqueue(new Callback<Child>() {
+                @Override
+                public void onResponse(Call<Child> call, Response<Child> response) {
+                    Child child = response.body();
+                    setTitle("Hi, " + child.getName() + "!");
+                }
+
+                @Override
+                public void onFailure(Call<Child> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         /*******************************************
          * Child's Total Points
@@ -75,32 +113,41 @@ public class ChildProfileActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        callCurrentChores.enqueue(new Callback<ArrayList<Chore>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Chore>> call, Response<ArrayList<Chore>> response) {
+        if (callCurrentChores != null) {
+            callCurrentChores.enqueue(new Callback<ArrayList<Chore>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Chore>> call, Response<ArrayList<Chore>> response) {
 
-                ArrayList<Chore> chores = response.body();
-                ArrayList<String> choreNames = new ArrayList<>();
+                    chores = response.body();
+                    ArrayList<String> choreNames = new ArrayList<>();
+                    List<Map<String, String>> data = new ArrayList<>();
 
-                for (Chore chore : chores){
-                    choreNames.add(chore.getName());
-                    childMap.put(chore.getName(), chore.getId());
+                    for (Chore chore : chores){
+                        Map<String, String> datum = new HashMap<>(2);
+                        datum.put("name", chore.getName());
+                        datum.put("value", "Value: " + String.valueOf(chore.getValue()) + " Points");
+                        data.add(datum);
+                        choreNames.add(chore.getName());
+                        choreMap.put(chore.getName(),chore);
+                        childMap.put(chore.getName(), chore.getId());
+                    }
+
+                   adapter = new SimpleAdapter(ChildProfileActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "value"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
+                    ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
+                    myList.setAdapter(adapter);
                 }
 
-                ArrayAdapter<String> stringArrayAdapter =
-                        new ArrayAdapter<>(ChildProfileActivity.this,
-                                android.R.layout.simple_list_item_1,
-                                choreNames);
-                ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
-                myList.setAdapter(stringArrayAdapter);
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
-            }
-        });
+                @Override
+                public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
+                }
+            });
+        }
 
     }
+
     /************************************
      * Navigation
      ************************************/
@@ -161,6 +208,30 @@ public class ChildProfileActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
+        Map choreName = (Map)adapter.getItem(position);
+        Chore chore = choreMap.get(choreName.get(choreName));
+
+        try {
+            Call<Child> callMakeChorePending = childChoreService.getChildApi().changeToPending(token, chore.getId());
+            callMakeChorePending.enqueue(new Callback<Child>() {
+                @Override
+                public void onResponse(Call<Child> call, Response<Child> response) {
+                    Snackbar.make(choreList,"Your Chore is now Pending ;)", Snackbar.LENGTH_LONG).show();
+                }
+
+                @Override
+                public void onFailure(Call<Child> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 }
         /************************************
          * OLD Navigation

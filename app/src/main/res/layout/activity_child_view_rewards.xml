@@ -64,5 +64,6 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/childViewRewardsCashInButton"
         android:choiceMode="singleChoice"
-        android:listSelector="#f9f5d2"/>
+        android:listSelector="#f9f5d2"
+        android:foreground="@color/abc_background_cache_hint_selector_material_light" />
 </RelativeLayout>

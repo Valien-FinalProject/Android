@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.theironyard.finalproject.R;
@@ -22,6 +23,7 @@ import com.theironyard.finalproject.services.ChildChoreService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -44,6 +46,7 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_child_view_rewards);
+        setTitle("Rewards");
         cashInButton = (Button)findViewById(R.id.childViewRewardsCashInButton);
         cashInButton.setOnClickListener(cashIn);
         ButterKnife.bind(this);
@@ -85,31 +88,42 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        callCurrentRewards.enqueue(new Callback<ArrayList<Reward>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
+        if (callCurrentRewards != null) {
+            callCurrentRewards.enqueue(new Callback<ArrayList<Reward>>() {
+                @Override
+                public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
 
-                rewards = response.body();
-                ArrayList<String> rewardNames = new ArrayList<>();
+                    rewards = response.body();
+                    List<Map<String, String>> data = new ArrayList<>();
 
-                for (Reward reward : rewards){
-                    rewardNames.add(reward.getName());
-                    childMap.put(reward.getName(), reward.getId());
-                    indexMap.put(reward.getName(), rewards.indexOf(reward));
+    //                ArrayList<String> rewardNames = new ArrayList<>();
+    //                ArrayList<String> rewardPoints = new ArrayList<>();
+
+                    for (Reward reward : rewards){
+                        Map<String, String> datum = new HashMap<>(2);
+    //                    rewardNames.add(reward.getName());
+    //                    rewardPoints.add(reward.getPoints() + " Points");
+                        datum.put("name", reward.getName());
+                        datum.put("points", String.valueOf(reward.getPoints()) + " Points");
+                        data.add(datum);
+                        childMap.put(reward.getName(), reward.getId());
+                        indexMap.put(reward.getName(), rewards.indexOf(reward));
+                    }
+
+                    SimpleAdapter adapter = new SimpleAdapter(ChildViewRewardsActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "points"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
+                    ListView myList = (ListView) findViewById(R.id.childViewRewardsListView);
+                    myList.setAdapter(adapter);
                 }
 
-                ArrayAdapter<String> stringArrayAdapter =
-                        new ArrayAdapter<>(ChildViewRewardsActivity.this,
-                                android.R.layout.simple_list_item_1,
-                                rewardNames);
-                ListView myList = (ListView) findViewById(R.id.childViewRewardsListView);
-                myList.setAdapter(stringArrayAdapter);
-            }
 
-            @Override
-            public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-            }
-        });
+                @Override
+                public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
+                }
+            });
+        }
     }
 
     /************************************

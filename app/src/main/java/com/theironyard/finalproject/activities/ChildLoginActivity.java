@@ -57,6 +57,7 @@ public class ChildLoginActivity extends AppCompatActivity {
                             if (response.code() == 200){
                                 TokenCommand tokenCommand = response.body();
                                 ChildChoreService.saveToken(tokenCommand.getToken());
+                                ChildChoreService.setChildId(tokenCommand.getId());
                                 startActivity(new Intent(ChildLoginActivity.this, ChildProfileActivity.class));
                             }else {
                                 Snackbar.make(mChildSignInButton, "Unable to Login. Please try again", Snackbar.LENGTH_LONG).show();
