@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/childViewRewardsTotalPointsText"
-            android:hint="Total Points"
+            android:hint="Points"
             android:textSize="22sp"
             android:textColor="#059f14"/>
 

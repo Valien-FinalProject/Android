@@ -14,8 +14,4 @@ public class ChildLogoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_child_logout);
     }
 
-    private void startChildLoginActivity() {
-        Intent intent = new Intent(this, ChildLoginActivity.class);
-        startActivity(intent);
-    }
 }
