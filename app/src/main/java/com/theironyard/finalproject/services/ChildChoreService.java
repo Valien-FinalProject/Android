@@ -23,6 +23,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -111,8 +112,14 @@ public class ChildChoreService {
         @GET("rewards")
         Call<ArrayList<Reward>> getRewards(@Header(TOKEN_KEY) String token);
 
-        @GET("deduct")
-        Call<Child> deductPoints(@Header(TOKEN_KEY) String token, @Body int id);
+        @PUT("reward/{id}/deduct")
+        Call<Child> deductPoints(@Header(TOKEN_KEY) String token, @Path("id") int id);
+
+        @POST("wishlist")
+        Call<Reward> addToWishList(@Header(TOKEN_KEY) String token, @Body String name);
+
+        @GET("wishlist")
+        Call<ArrayList<Reward>> getWishlist(@Header(TOKEN_KEY)String token);
     }
 
 
