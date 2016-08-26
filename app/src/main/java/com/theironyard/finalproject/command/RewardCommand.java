@@ -8,8 +8,13 @@ public class RewardCommand {
     private String name;
     private String description;
     private int points;
+    private String url;
 
     public RewardCommand() {
+    }
+
+    public RewardCommand(int points) {
+        this.points = points;
     }
 
     public RewardCommand(String name, String description, int points) {
@@ -40,5 +45,13 @@ public class RewardCommand {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

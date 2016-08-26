@@ -144,8 +144,8 @@ public class ParentProfileActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_settings) {
-            // Handle the camera action
+        if (id == R.id.nav_update) {
+            startUpdateProfile();
         } else if (id == R.id.nav_view_chores) {
             startPViewChores();
         } else if (id == R.id.nav_view_wishlists) {
@@ -158,8 +158,6 @@ public class ParentProfileActivity extends AppCompatActivity
             startCreateChores();
         }else if (id == R.id.nav_create_reward){
             startCreateRewards();
-        }else if (id == R.id.nav_update) {
-            startUpdateProfile();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
