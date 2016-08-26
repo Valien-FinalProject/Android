@@ -33,7 +33,9 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
 
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
+    final Map<String, Integer> indexMap = new HashMap<>();
     String token = "token " + childChoreService.getCurrentToken();
+    ArrayList<Reward> rewards;
 
     Button cashInButton;
     TextView pointText;
@@ -87,18 +89,19 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
 
-                ArrayList<Reward> chores = response.body();
-                ArrayList<String> choreNames = new ArrayList<>();
+                rewards = response.body();
+                ArrayList<String> rewardNames = new ArrayList<>();
 
-                for (Reward reward : chores){
-                    choreNames.add(reward.getName());
+                for (Reward reward : rewards){
+                    rewardNames.add(reward.getName());
                     childMap.put(reward.getName(), reward.getId());
+                    indexMap.put(reward.getName(), rewards.indexOf(reward));
                 }
 
                 ArrayAdapter<String> stringArrayAdapter =
                         new ArrayAdapter<>(ChildViewRewardsActivity.this,
                                 android.R.layout.simple_list_item_1,
-                                choreNames);
+                                rewardNames);
                 ListView myList = (ListView) findViewById(R.id.childViewRewardsListView);
                 myList.setAdapter(stringArrayAdapter);
             }
@@ -152,26 +155,30 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             ListView rewardsList = (ListView)findViewById(R.id.childViewRewardsListView);
-            Reward selectedReward = (Reward)rewardsList.getSelectedItem();
 
-            int childPoints = Integer.parseInt(pointText.toString());
+            String rewardName = (String)rewardsList.getAdapter().getItem((int)rewardsList.getSelectedItemId());
+            int rewardIndex = indexMap.get(rewardName);
+            final Reward selectedReward = rewards.get(rewardIndex);
+
+            final int childPoints = Integer.parseInt(pointText.getText().toString());
 
             if (childPoints < selectedReward.getPoints()){
                 Snackbar.make(view, "You do not have enough points for this Reward!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }else {
                 try {
-                    Call<Child> callDeductChildPoints = childChoreService.getChildApi().deductPoints(token, childPoints);
+                    Call<Child> callDeductChildPoints = childChoreService.getChildApi().deductPoints(token, childMap.get(rewardName));
                     callDeductChildPoints.enqueue(new Callback<Child>() {
                         @Override
                         public void onResponse(Call<Child> call, Response<Child> response) {
+                            String newPoints = Integer.toString(childPoints - selectedReward.getPoints());
+                            pointText.setText(newPoints);
                         }
 
                         @Override
                         public void onFailure(Call<Child> call, Throwable t) {
                         }
                     });
-                    pointText.setText(childPoints - selectedReward.getPoints());
                 } catch (Exception e) {
                     Snackbar.make(view, "Uh oh, we were not able to deduct your points!", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
