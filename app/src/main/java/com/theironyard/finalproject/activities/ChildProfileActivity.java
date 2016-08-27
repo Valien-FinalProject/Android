@@ -211,7 +211,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         Map choreName = (Map)adapter.getItem(position);
-        Chore chore = choreMap.get(choreName.get(choreName));
+        Chore chore = choreMap.get(choreName.get("name"));
 
         try {
             Call<Child> callMakeChorePending = childChoreService.getChildApi().changeToPending(token, chore.getId());
@@ -223,7 +223,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
 
                 @Override
                 public void onFailure(Call<Child> call, Throwable t) {
-
+                    Snackbar.make(choreList,"Your Chore didn't make it through...booo! :'(", Snackbar.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {

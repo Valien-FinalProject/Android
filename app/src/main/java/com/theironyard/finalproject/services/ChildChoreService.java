@@ -113,7 +113,7 @@ public class ChildChoreService {
     }
 
     public interface ChildAPI{
-        @GET("chores")
+        @GET("current")
         Call<ArrayList<Chore>> getChores(@Header(TOKEN_KEY) String token);
 
         @GET("points")
