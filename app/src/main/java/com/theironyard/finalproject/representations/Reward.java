@@ -10,6 +10,7 @@ public class Reward {
     private String url;
     private int points;
     private int id;
+    private String imageUrl;
 
     public String getName() {
         return name;
@@ -49,5 +50,13 @@ public class Reward {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
