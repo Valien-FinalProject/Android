@@ -35,9 +35,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ParentProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemLongClickListener {
 
     Spinner topSpinner;
+
+    ArrayList<Chore> pendingChores = new ArrayList<>();
     final Map<String, Integer> childMap = new HashMap<>();
     final ParentChoreService parentChoreService = new ParentChoreService();
     String token = "";
@@ -270,9 +272,9 @@ public class ParentProfileActivity extends AppCompatActivity
             callCompletedChores.enqueue(new Callback<ArrayList<Chore>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                    ArrayList<Chore> chores = response.body();
+                    pendingChores = response.body();
                     ArrayList<String> choreNames = new ArrayList<>();
-                    Iterator<Chore> choreNamesIterator = chores.iterator();
+                    Iterator<Chore> choreNamesIterator = pendingChores.iterator();
                     while(choreNamesIterator.hasNext()){
                         choreNames.add(choreNamesIterator.next().getName());
                     }
@@ -301,11 +303,11 @@ public class ParentProfileActivity extends AppCompatActivity
         }
     };
 
-    AdapterView.OnItemLongClickListener onPendingChoresList = new AdapterView.OnItemLongClickListener(){
 
-        @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-            return false;
-        }
-    };
+    @Override
+    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+        return true;
+    }
 }

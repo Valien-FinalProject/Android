@@ -45,10 +45,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ParentViewWishlistActivity extends AppCompatActivity{
+public class ParentViewWishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
     ArrayAdapter<Reward> wishes;
     ListView wishList;
+    Map<String, Reward> rewardMap = new HashMap<>();
 
     @Bind(R.id.pViewWishlistPointValueText)
     EditText mPoints;
@@ -73,8 +74,8 @@ public class ParentViewWishlistActivity extends AppCompatActivity{
         ButterKnife.bind(this);
         token = "token " + parentChoreService.getCurrentToken();
 
-//        mApproveButton.setOnClickListener(this);
-//        mDenyButton.setOnClickListener(this);
+        mApproveButton.setOnClickListener(this);
+        mDenyButton.setOnClickListener(this);
 
         /************************************
          * Spinner
@@ -130,6 +131,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity{
 
                             ArrayList<String> rewardNames = new ArrayList<>();
                             for (Reward reward : rewards){
+                                rewardMap.put(reward.getName(), reward);
                                 rewardNames.add(reward.getName());
                             }
                             ArrayAdapter<String> wishes =
@@ -209,23 +211,27 @@ public class ParentViewWishlistActivity extends AppCompatActivity{
         /*******************************************
          * Approve/Deny Wishlist Item
          *******************************************/
-        public void onClick(View view) {
+        public void onClick(final View view) {
 
         int childId = childMap.get(topSpinner.getSelectedItem().toString());
             switch (view.getId()) {
                 case (R.id.pViewWishlistApproveButton):
 
                     int points = Integer.parseInt(mPoints.getText().toString());
-                    RewardCommand rewardCommand = new RewardCommand(points);
+                    String wishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
+                    Reward reward = rewardMap.get(wishName);
+                    RewardCommand rewardCommand = new RewardCommand(reward.getName(), reward.getDescription(),points);
 
                     try {
-                        parentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, rewardId)
+                        parentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, reward.getId())
                                 .enqueue(new Callback<RewardCommand>() {
                                     @Override
                                     public void onResponse(Call<RewardCommand> call, Response<RewardCommand> response) {
                                         if (response.code() == 200) {
                                             RewardCommand rewardCommand = response.body();
                                             ParentChoreService.saveReward(rewardCommand);
+                                            Snackbar.make(view, "The wish has been approved is now a reward!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
                                             setDefaultValues();
                                         }
                                     }
@@ -241,17 +247,21 @@ public class ParentViewWishlistActivity extends AppCompatActivity{
                     break;
 
                 case (R.id.pViewWishlistDenyButton):
+                    String deleteWishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
+                    Reward deleteReward = rewardMap.get(deleteWishName);
                     try {
-                        parentChoreService.getParentApi().deleteReward(token, rewardId)
+                        parentChoreService.getParentApi().deleteReward(token, deleteReward.getId())
                                 .enqueue(new Callback<ArrayList<Reward>>() {
                                     @Override
                                     public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
-
+                                        Snackbar.make(view, "That reward has been denied!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
                                     }
 
                                     @Override
                                     public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-
+                                        Snackbar.make(view, "There was an issue with the API.", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
                                     }
                                 });
                     } catch (Exception e) {
