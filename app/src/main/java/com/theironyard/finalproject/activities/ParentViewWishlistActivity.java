@@ -13,13 +13,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.theironyard.finalproject.R;
 import com.theironyard.finalproject.command.RewardCommand;
 import com.theironyard.finalproject.representations.Child;
@@ -27,9 +31,11 @@ import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.representations.Reward;
 import com.theironyard.finalproject.services.ParentChoreService;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -41,24 +47,24 @@ import retrofit2.Response;
 
 public class ParentViewWishlistActivity extends AppCompatActivity{
 
-//    ArrayAdapter<Reward> wishes;
-//    ListView wishList;
-//
-//    @Bind(R.id.pViewWishlistPointValueText)
-//    EditText mPoints;
-//
-//    @Bind(R.id.pViewWishlistApproveButton)
-//    Button mApproveButton;
+    ArrayAdapter<Reward> wishes;
+    ListView wishList;
 
-//    @Bind(R.id.pViewWishlistDenyButton)
-//    Button mDenyButton;
+    @Bind(R.id.pViewWishlistPointValueText)
+    EditText mPoints;
+
+    @Bind(R.id.pViewWishlistApproveButton)
+    Button mApproveButton;
+
+    @Bind(R.id.pViewWishlistDenyButton)
+    Button mDenyButton;
 
     Spinner topSpinner;
     final Map<String, Integer> childMap = new HashMap<>();
     final ParentChoreService parentChoreService = new ParentChoreService();
+    private List<Reward> childWishes = new ArrayList<>();
     String token = "";
-//    private int rewardId;
-//    private int childId;
+    private int rewardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,116 +109,165 @@ public class ParentViewWishlistActivity extends AppCompatActivity{
         }
 
         topSpinner.setOnItemSelectedListener(onSpinner);
+//        populateListView();
     }
+
+    /*******************************************
+     * Wishlist By Child
+     *******************************************/
 
     AdapterView.OnItemSelectedListener onSpinner =  new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             int childId = childMap.get(topSpinner.getSelectedItem().toString());
-        }
-            /*******************************************
-             * Wishlist By Child
-             *******************************************/
 
-//            try {
-//                Call<ArrayList<Reward>> callCurrentRewards = parentChoreService.getParentApi().getChildWishlist(token, childId);
-//                callCurrentRewards.enqueue(new Callback<ArrayList<Reward>>() {
-//                    @Override
-//                    public void onResponse(Call<ArrayList<Reward>> callCurrentRewards, Response<ArrayList<Reward>> response) {
-//                        ArrayList<Reward> rewards = response.body();
-//                        ArrayList<String> rewardNames = new ArrayList<>();
-//                        for (Reward reward : rewards) {
-//                            rewardNames.add(reward.getName());
-//                        }
-//                        ArrayAdapter<String> wishes =
-//                                new ArrayAdapter<>(ParentViewWishlistActivity.this,
-//                                        android.R.layout.simple_list_item_1,
-//                                        rewardNames);
-//                        wishList = (ListView) findViewById(R.id.pViewWishlistListView);
-//                        wishList.setAdapter(wishes);
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-//
-//                    }
-//                });
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            wishList.setOnItemSelectedListener(selectWish);
-//        }
+            try {
+                Call<ArrayList<Reward>> callCurrentRewards = parentChoreService.getParentApi().getChildWishlist(token, childId);
+                    callCurrentRewards.enqueue(new Callback<ArrayList<Reward>>() {
+                        @Override
+                        public void onResponse(Call<ArrayList<Reward>> callCurrentRewards, Response<ArrayList<Reward>> response) {
+                            ArrayList<Reward> rewards = response.body();
+
+                            ArrayList<String> rewardNames = new ArrayList<>();
+                            for (Reward reward : rewards){
+                                rewardNames.add(reward.getName());
+                            }
+                            ArrayAdapter<String> wishes =
+                                    new ArrayAdapter<>(ParentViewWishlistActivity.this, android.R.layout.simple_list_item_1, rewardNames);
+                            wishList = (ListView) findViewById(R.id.pViewWishlistListView);
+                            wishList.setAdapter(wishes);
+                            wishList.setOnItemSelectedListener(selectWish);
+                        }
+
+                        @Override
+                        public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
+
+                        }
+                    });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
 
         @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
+
+        AdapterView.OnItemSelectedListener selectWish = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                rewardId = (int) wishes.getItemId(position);
+            }
+
+            @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         };
 
-//    AdapterView.OnItemSelectedListener selectWish = new AdapterView.OnItemSelectedListener() {
-//        @Override
-//        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-//            rewardId = (int) wishes.getItemId(position);
+        /*******************************************
+         * Insert image and url into ListView
+         *******************************************/
+
+//        private void populateListView() {
+//            ArrayAdapter<Reward> adapter = new MyListAdapter();
+//            ListView list = (ListView) findViewById(R.id.pViewWishlistListView);
+//            list.setAdapter(adapter);
+//        }
+//
+//    private class MyListAdapter extends ArrayAdapter<Reward> {
+//        public MyListAdapter() {
+//            super(ParentViewWishlistActivity.this, R.layout.item_view, childWishes);
 //        }
 //
 //        @Override
-//        public void onNothingSelected(AdapterView<?> adapterView) {
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            View itemView = convertView;
+//            if (itemView == null) {
+//                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
+//            }
 //
-//        }
-//    };
-    /*******************************************
-     * Approve/Deny Wishlist Item
-     *******************************************/
-//    public void onClick(View view) {
+//            // Select reward to view
+//            Reward currentWish = rewards.get(position);
 //
-//        ParentChoreService parentChoreService = new ParentChoreService();
+//            ImageView imageView = (ImageView)itemView.findViewById(R.id.wishlistItemImageView);
+//            Picasso.with(ParentViewWishlistActivity.this).load(currentWish.getImageUrl()).into(imageView);
 //
-//        switch (view.getId()) {
-//            case (R.id.pViewWishlistApproveButton):
+//            TextView nameText = (TextView) itemView.findViewById(R.id.viewWishlistNameText);
+//            nameText.setText(currentWish.getName());
 //
-//                int points = Integer.parseInt(mPoints.getText().toString());
-//                RewardCommand rewardCommand = new RewardCommand(points);
+//            TextView urlText = (TextView) itemView.findViewById(R.id.viewWishlistUrlText);
+//            urlText.setText(currentWish.getUrl());
 //
-//                try {
-//                    parentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, rewardId)
-//                            .enqueue(new Callback<RewardCommand>() {
-//                                @Override
-//                                public void onResponse(Call<RewardCommand> call, Response<RewardCommand> response) {
-//                                    if(response.code() == 200){
-//                                        RewardCommand rewardCommand = response.body();
-//                                        ParentChoreService.saveReward(rewardCommand);
-//
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<RewardCommand> call, Throwable t) {
-//
-//                                }
-//                            });
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                break;
-//
-//            case (R.id.pViewWishlistDenyButton):
-//                try {
-//                    parentChoreService.getParentApi().deleteReward(token, rewardId)
-//                            .enqueue(new Callback<ArrayList<Reward>>() {
-//                                @Override
-//                                public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
-//
-//                                }
-//
-//                                @Override
-//                                public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-//
-//                                }
-//                            });
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                break;
+//            return itemView;
 //        }
 //    }
+
+        /*******************************************
+         * Approve/Deny Wishlist Item
+         *******************************************/
+        public void onClick(View view) {
+
+        int childId = childMap.get(topSpinner.getSelectedItem().toString());
+            switch (view.getId()) {
+                case (R.id.pViewWishlistApproveButton):
+
+                    int points = Integer.parseInt(mPoints.getText().toString());
+                    RewardCommand rewardCommand = new RewardCommand(points);
+
+                    try {
+                        parentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, rewardId)
+                                .enqueue(new Callback<RewardCommand>() {
+                                    @Override
+                                    public void onResponse(Call<RewardCommand> call, Response<RewardCommand> response) {
+                                        if (response.code() == 200) {
+                                            RewardCommand rewardCommand = response.body();
+                                            ParentChoreService.saveReward(rewardCommand);
+                                            setDefaultValues();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<RewardCommand> call, Throwable t) {
+
+                                    }
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case (R.id.pViewWishlistDenyButton):
+                    try {
+                        parentChoreService.getParentApi().deleteReward(token, rewardId)
+                                .enqueue(new Callback<ArrayList<Reward>>() {
+                                    @Override
+                                    public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
+
+                                    }
+                                });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+            }
+        }
+
+    public void setDefaultValues() {
+        mPoints.setText("");
+    }
+
+    private void startPViewWishlist() {
+        Intent intent = new Intent(this, ParentViewWishlistActivity.class);
+        startActivity(intent);
+    }
 }
+

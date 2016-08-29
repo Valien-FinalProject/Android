@@ -62,5 +62,18 @@
         android:id="@+id/allRewardsListView"
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:choiceMode="singleChoice"
+        android:clickable="false"
+        android:listSelector="#f9f5d2"
+        android:layout_above="@+id/deleteRewardButton"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Reward"
+        android:id="@+id/deleteRewardButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>

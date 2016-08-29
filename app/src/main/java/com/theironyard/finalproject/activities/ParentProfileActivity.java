@@ -88,14 +88,14 @@ public class ParentProfileActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -146,8 +146,6 @@ public class ParentProfileActivity extends AppCompatActivity
 
         if (id == R.id.nav_update) {
             startUpdateProfile();
-        } else if (id == R.id.nav_view_chores) {
-            startPViewChores();
         } else if (id == R.id.nav_view_wishlists) {
             startPViewWishlist();
         } else if (id == R.id.nav_view_calendar) {
@@ -163,11 +161,6 @@ public class ParentProfileActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void startPViewChores() {
-        Intent intent = new Intent(this, ParentViewChoresActivity.class);
-        startActivity(intent);
     }
 
     private void startPViewWishlist() {
