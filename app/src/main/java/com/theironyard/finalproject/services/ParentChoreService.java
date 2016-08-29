@@ -152,6 +152,12 @@ public class ParentChoreService {
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);
 
+        @POST("/child/{childId}/approve/{choreId}")
+        Call<Chore> approveChore(@Path("childId") int childId, @Path("choreId") int choreId, @Header(TOKEN_KEY) String token);
+
+        @PUT("/chore/{id}/deny")
+        Call<Chore> denyChore(@Header(TOKEN_KEY) String token, @Path("id") int id);
+
     }
 }
 

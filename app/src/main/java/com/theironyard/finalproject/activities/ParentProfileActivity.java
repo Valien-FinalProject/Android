@@ -3,6 +3,7 @@ package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -33,12 +35,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ParentProfileActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemLongClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     Spinner topSpinner;
+    ListView pendingList;
+    Button mApprovePending;
+    Button mDenyPending;
+
 
     ArrayList<Chore> pendingChores = new ArrayList<>();
+    Map<String, Chore> pendingChoreMap = new HashMap<>();
     final Map<String, Integer> childMap = new HashMap<>();
+    int childId;
     final ParentChoreService parentChoreService = new ParentChoreService();
     String token = "";
 
@@ -46,8 +54,14 @@ public class ParentProfileActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_profile);
+        mApprovePending = (Button)findViewById(R.id.pProfileApproveButton);
+        mDenyPending = (Button)findViewById(R.id.pProfileDenyButton);
         ButterKnife.bind(this);
         token = "token " + parentChoreService.getCurrentToken();
+        pendingList = (ListView) findViewById(R.id.pProfileChoresPendingListView);
+        mApprovePending.setOnClickListener(this);
+        mDenyPending.setOnClickListener(this);
+
 
         /************************************
          * Spinner
@@ -196,7 +210,7 @@ public class ParentProfileActivity extends AppCompatActivity
     AdapterView.OnItemSelectedListener onSpinner =  new AdapterView.OnItemSelectedListener() {
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        int childId = childMap.get(topSpinner.getSelectedItem().toString());
+        childId = childMap.get(topSpinner.getSelectedItem().toString());
         /*******************************************
          * Today's Chores ListView and ArrayAdapter
          *******************************************/
@@ -237,18 +251,19 @@ public class ParentProfileActivity extends AppCompatActivity
             callPendingChores.enqueue(new Callback<ArrayList<Chore>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                    ArrayList<Chore> chores = response.body();
+                    pendingChores = response.body();
                     ArrayList<String> choreNames = new ArrayList<>();
-                    Iterator<Chore> choreNamesIterator = chores.iterator();
-                    while(choreNamesIterator.hasNext()){
-                        choreNames.add(choreNamesIterator.next().getName());
+
+                    for (Chore chore : pendingChores){
+                        pendingChoreMap.put(chore.getName(), chore);
+                        choreNames.add(chore.getName());
                     }
                     ArrayAdapter<String> stringArrayAdapter=
                             new ArrayAdapter<>(ParentProfileActivity.this,
                                     android.R.layout.simple_list_item_1,
                                     choreNames);
                     ListView myList=(ListView)
-                            findViewById(R.id.pProfileChoresCompletedListView);
+                            findViewById(R.id.pProfileChoresPendingListView);
                     myList.setAdapter(stringArrayAdapter);
                 }
 
@@ -270,11 +285,10 @@ public class ParentProfileActivity extends AppCompatActivity
             callCompletedChores.enqueue(new Callback<ArrayList<Chore>>() {
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
-                    pendingChores = response.body();
+                    ArrayList<Chore> completeChores = response.body();
                     ArrayList<String> choreNames = new ArrayList<>();
-                    Iterator<Chore> choreNamesIterator = pendingChores.iterator();
-                    while(choreNamesIterator.hasNext()){
-                        choreNames.add(choreNamesIterator.next().getName());
+                    for (Chore chore: completeChores){
+                        choreNames.add(chore.getName());
                     }
                     ArrayAdapter<String> stringArrayAdapter=
                             new ArrayAdapter<>(ParentProfileActivity.this,
@@ -301,11 +315,58 @@ public class ParentProfileActivity extends AppCompatActivity
         }
     };
 
-
     @Override
-    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onClick(final View view) {
 
+        Chore chore = new Chore();
 
-        return true;
+        switch (view.getId()){
+            case (R.id.pProfileApproveButton):
+                String wishName= (String) pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
+                chore = pendingChoreMap.get(wishName);
+
+                try {
+                    ParentChoreService.getParentApi().approveChore(childId, chore.getId(), token)
+                            .enqueue(new Callback<Chore>() {
+                                @Override
+                                public void onResponse(Call<Chore> call, Response<Chore> response) {
+                                    Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Chore> call, Throwable t) {
+                                    Snackbar.make(view, "There was an issue with the API!", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
+                            });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case (R.id.pProfileDenyButton):
+                try {
+                    ParentChoreService.getParentApi().denyChore(token, chore.getId())
+                            .enqueue(new Callback<Chore>() {
+                                @Override
+                                public void onResponse(Call<Chore> call, Response<Chore> response) {
+                                    Snackbar.make(view, "Chore has been denied and returned to the child's list!", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
+
+                                @Override
+                                public void onFailure(Call<Chore> call, Throwable t) {
+                                    Snackbar.make(view, "There was an issue with the API!", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();
+                                }
+                            });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+        }
+
     }
 }
