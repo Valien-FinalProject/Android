@@ -62,6 +62,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
     Button mDenyButton;
 
     Spinner topSpinner;
+    int childId;
     final Map<String, Integer> childMap = new HashMap<>();
     final ParentChoreService parentChoreService = new ParentChoreService();
     private List<Reward> childWishes = new ArrayList<>();
@@ -119,9 +120,10 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
      *******************************************/
 
     AdapterView.OnItemSelectedListener onSpinner =  new AdapterView.OnItemSelectedListener() {
+
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            int childId = childMap.get(topSpinner.getSelectedItem().toString());
+            childId = childMap.get(topSpinner.getSelectedItem().toString());
 
             try {
                 Call<ArrayList<Reward>> callCurrentRewards = parentChoreService.getParentApi().getChildWishlist(token, childId);
@@ -214,7 +216,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
          *******************************************/
         public void onClick(final View view) {
 
-        int childId = childMap.get(topSpinner.getSelectedItem().toString());
+        childId = childMap.get(topSpinner.getSelectedItem().toString());
             switch (view.getId()) {
                 case (R.id.pViewWishlistApproveButton):
 
@@ -224,7 +226,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                     RewardCommand rewardCommand = new RewardCommand(reward.getName(), reward.getDescription(),points);
 
                     try {
-                        parentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, reward.getId())
+                        ParentChoreService.getParentApi().updateRewardInfo(rewardCommand, childId, reward.getId())
                                 .enqueue(new Callback<RewardCommand>() {
                                     @Override
                                     public void onResponse(Call<RewardCommand> call, Response<RewardCommand> response) {
@@ -250,19 +252,21 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                 case (R.id.pViewWishlistDenyButton):
                     String deleteWishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
                     Reward deleteReward = rewardMap.get(deleteWishName);
+
                     try {
-                        parentChoreService.getParentApi().deleteReward(token, deleteReward.getId())
-                                .enqueue(new Callback<ArrayList<Reward>>() {
+                        ParentChoreService.getParentApi().killWish(deleteReward.getId(), childId, token)
+                                .enqueue(new Callback<Reward>() {
                                     @Override
-                                    public void onResponse(Call<ArrayList<Reward>> call, Response<ArrayList<Reward>> response) {
-                                        Snackbar.make(view, "That reward has been denied!", Snackbar.LENGTH_LONG)
-                                                .setAction("Action", null).show();
+                                    public void onResponse(Call<Reward> call, Response<Reward> response) {
+                                        if (response.code() == 200){
+                                            Snackbar.make(view, "The wish has been deleted!", Snackbar.LENGTH_LONG)
+                                                    .setAction("Action", null).show();
+                                        }
                                     }
 
                                     @Override
-                                    public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-                                        Snackbar.make(view, "There was an issue with the API.", Snackbar.LENGTH_LONG)
-                                                .setAction("Action", null).show();
+                                    public void onFailure(Call<Reward> call, Throwable t) {
+
                                     }
                                 });
                     } catch (Exception e) {

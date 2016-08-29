@@ -143,14 +143,20 @@ public class ParentChoreService {
         Call<RewardCommand> updateRewardInfo(@Body RewardCommand rewardCommand,
                                              @Path("childId") int childId, @Path("rewardId") int rewardId);
 
-        @DELETE("reward/{id}")
-        Call<ArrayList<Reward>> deleteReward(@Header(TOKEN_KEY) String token, @Path("id") int id);
+        @DELETE("child/{childId}/wishlist/{rewardId}")
+        Call<Reward> killWish(@Path("childId") int childId, @Path("rewardId") int rewardId, @Header(TOKEN_KEY) String token);
 
         @PUT("profile")
         Call<UserCommand> updateParentInfo(@Body UserCommand user);
 
         @POST("register")
         Call<UserCommand> getParentInfo(@Body UserCommand user);
+
+        @POST("child/{childId}/approve/{choreId}")
+        Call<Chore> approveChore(@Path("childId") int childId, @Path("choreId") int choreId, @Header(TOKEN_KEY) String token);
+
+        @PUT("chore/{id}/deny")
+        Call<Chore> denyChore(@Path("id") int id, @Header(TOKEN_KEY) String token);
 
     }
 }
