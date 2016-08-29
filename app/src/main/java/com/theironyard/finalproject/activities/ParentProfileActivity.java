@@ -318,20 +318,24 @@ public class ParentProfileActivity extends AppCompatActivity
     @Override
     public void onClick(final View view) {
 
-        Chore chore = new Chore();
+        String wishName= (String) pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
+        Chore pendingChore = pendingChoreMap.get(wishName);
+        int pendingChoreId = pendingChore.getId();
 
         switch (view.getId()){
             case (R.id.pProfileApproveButton):
-                String wishName= (String) pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
-                chore = pendingChoreMap.get(wishName);
+
 
                 try {
-                    ParentChoreService.getParentApi().approveChore(childId, chore.getId(), token)
+                    ParentChoreService.getParentApi().approveChore(childId, pendingChoreId, token)
                             .enqueue(new Callback<Chore>() {
                                 @Override
                                 public void onResponse(Call<Chore> call, Response<Chore> response) {
-                                    Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+                                    if (response.code() == 200){
+                                        Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
+
                                 }
 
                                 @Override
@@ -347,12 +351,14 @@ public class ParentProfileActivity extends AppCompatActivity
 
             case (R.id.pProfileDenyButton):
                 try {
-                    ParentChoreService.getParentApi().denyChore(token, chore.getId())
-                            .enqueue(new Callback<Chore>() {
+                    Call<Chore> denyChore = ParentChoreService.getParentApi().denyChore(pendingChoreId, token);
+                            denyChore.enqueue(new Callback<Chore>() {
                                 @Override
                                 public void onResponse(Call<Chore> call, Response<Chore> response) {
-                                    Snackbar.make(view, "Chore has been denied and returned to the child's list!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+                                    if (response.code() == 200) {
+                                        Snackbar.make(view, "Chore has been denied and returned to the child's list!", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
+                                    }
                                 }
 
                                 @Override
