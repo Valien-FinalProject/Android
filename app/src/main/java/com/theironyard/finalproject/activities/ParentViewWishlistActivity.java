@@ -251,12 +251,13 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                 case (R.id.pViewWishlistDenyButton):
                     String deleteWishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
                     Reward deleteReward = rewardMap.get(deleteWishName);
+                    int deleteRewardId = deleteReward.getId();
 
                     try {
-                        ParentChoreService.getParentApi().killWish(deleteReward.getId(), childId, token)
-                                .enqueue(new Callback<Reward>() {
+                        ParentChoreService.getParentApi().killWish(childId, deleteRewardId, token)
+                                .enqueue(new Callback<Child>() {
                                     @Override
-                                    public void onResponse(Call<Reward> call, Response<Reward> response) {
+                                    public void onResponse(Call<Child> call, Response<Child> response) {
                                         if (response.code() == 200){
                                             Snackbar.make(view, "The wish has been deleted!", Snackbar.LENGTH_LONG)
                                                     .setAction("Action", null).show();
@@ -264,8 +265,9 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                                     }
 
                                     @Override
-                                    public void onFailure(Call<Reward> call, Throwable t) {
-
+                                    public void onFailure(Call<Child> call, Throwable t) {
+                                        Snackbar.make(view, "API call failed.", Snackbar.LENGTH_LONG)
+                                                .setAction("Action", null).show();
                                     }
                                 });
                     } catch (Exception e) {

@@ -144,7 +144,7 @@ public class ParentChoreService {
                                              @Path("childId") int childId, @Path("rewardId") int rewardId);
 
         @DELETE("child/{childId}/wishlist/{rewardId}")
-        Call<Reward> killWish(@Path("childId") int childId, @Path("rewardId") int rewardId, @Header(TOKEN_KEY) String token);
+        Call<Child> killWish(@Path("childId") int childId, @Path("rewardId") int rewardId, @Header(TOKEN_KEY) String token);
 
         @PUT("profile")
         Call<UserCommand> updateParentInfo(@Body UserCommand user);
