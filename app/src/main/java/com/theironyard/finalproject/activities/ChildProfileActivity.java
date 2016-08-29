@@ -175,10 +175,6 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
             startCreateWishListItemActivity();
             return true;
         }
-        else if(id == R.id.chores){
-            startChildViewChoresActivity();
-            return true;
-        }
         else if(id == R.id.childLogout){
             startChildLogoutActivity();
             return true;
@@ -197,10 +193,6 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
     }
     private void startCreateWishListItemActivity() {
         Intent intent = new Intent(this, CreateWishlistItemActivity.class);
-        startActivity(intent);
-    }
-    private void startChildViewChoresActivity() {
-        Intent intent = new Intent(this, ChildViewChoresActivity.class);
         startActivity(intent);
     }
     private void startChildLogoutActivity() {

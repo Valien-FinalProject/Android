@@ -17,11 +17,6 @@
           android:title="Wishlist"
           app:showAsAction="always"/>
 
-    <item android:id="@+id/chores"
-          android:icon="@drawable/ic_menu_check"
-          android:title="Chores"
-          app:showAsAction="always"/>
-
     <item android:id="@+id/childLogout"
           android:icon="@drawable/ic_menu_power"
           android:title="Logout"

@@ -104,4 +104,5 @@ public class RegistrationActivity extends AppCompatActivity {
         mEmail.setText("");
         mPhone.setText("");
     }
+
 }

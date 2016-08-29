@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/parent_home"
+          android:icon="@drawable/ic_home_black_24dp"
+          android:title="Home"
+          app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_view_wishlists"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="Wishlists"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_create_child"
+        android:icon="@drawable/ic_menu_child"
+        android:title="Create Child"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_create_reward"
+        android:icon="@drawable/ic_menu_star"
+        android:title="Create Reward"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_create_chore"
+        android:icon="@drawable/ic_menu_check"
+        android:title="Create Chore"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_update"
+        android:icon="@drawable/ic_menu_edit"
+        android:title="Update Profile"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/ic_menu_power"
+        android:title="Logout"
+        app:showAsAction="always"/>
+</menu>
+
