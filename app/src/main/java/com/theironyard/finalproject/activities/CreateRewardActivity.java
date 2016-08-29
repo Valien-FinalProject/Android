@@ -1,8 +1,12 @@
 package com.theironyard.finalproject.activities;
 
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -161,5 +165,80 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
         mName.setText("");
         mDescription.setText("");
         mPoints.setText("");
+    }
+    /************************************
+     * Navigation
+     ************************************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.parent_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        int id = item.getItemId();
+
+        if (id == R.id.parent_home){
+            startParentProfileActivity();
+            return true;
+        }
+        else if(id == R.id.nav_view_wishlists){
+            startParentViewWishlistActivity();
+            return true;
+        }
+        else if(id == R.id.nav_create_child){
+            startCreateChildActivity();
+            return true;
+        }
+        else if(id == R.id.nav_create_reward){
+            startCreateRewardActivity();
+            return true;
+        }
+        else if(id == R.id.nav_create_chore){
+            startCreateChoresActivity();
+            return true;
+        }
+        else if(id == R.id.nav_update){
+            startUpdateProfileActivity();
+            return true;
+        }
+        else if(id == R.id.nav_logout){
+            startParentLogoutActivity();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void startParentProfileActivity() {
+        Intent intent = new Intent(this, ParentProfileActivity.class);
+        startActivity(intent);
+    }
+    private void startParentViewWishlistActivity() {
+        Intent intent = new Intent(this, ParentViewWishlistActivity.class);
+        startActivity(intent);
+    }
+    private void startCreateChildActivity() {
+        Intent intent = new Intent(this, CreateChildActivity.class);
+        startActivity(intent);
+    }
+    private void startCreateRewardActivity() {
+        Intent intent = new Intent(this, CreateRewardActivity.class);
+        startActivity(intent);
+    }
+    private void startCreateChoresActivity() {
+        Intent intent = new Intent(this, CreateChoreActivity.class);
+        startActivity(intent);
+    }
+    private void startUpdateProfileActivity() {
+        Intent intent = new Intent(this, UpdateProfileActivity.class);
+        startActivity(intent);
+    }
+    private void startParentLogoutActivity() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
     }
 }

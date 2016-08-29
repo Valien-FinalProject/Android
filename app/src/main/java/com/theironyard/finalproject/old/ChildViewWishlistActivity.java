@@ -48,10 +48,6 @@ public class ChildViewWishlistActivity extends AppCompatActivity {
             startCreateWishlistItemActivity();
             return true;
         }
-        else if(id == R.id.chores){
-            startChildViewChoresActivity();
-            return true;
-        }
         else if(id == R.id.childLogout){
             startChildLogoutActivity();
             return true;
@@ -70,10 +66,6 @@ public class ChildViewWishlistActivity extends AppCompatActivity {
     }
     private void startCreateWishlistItemActivity() {
         Intent intent = new Intent(this, CreateWishlistItemActivity.class);
-        startActivity(intent);
-    }
-    private void startChildViewChoresActivity() {
-        Intent intent = new Intent(this, ChildViewChoresActivity.class);
         startActivity(intent);
     }
     private void startChildLogoutActivity() {
