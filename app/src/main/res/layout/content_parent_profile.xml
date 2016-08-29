@@ -34,7 +34,7 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="135dp"
+        android:layout_height="130dp"
         android:id="@+id/pProfileChoresTodayListView"
         android:layout_below="@+id/textView14"
         android:layout_centerHorizontal="true"/>
@@ -45,33 +45,60 @@
         android:id="@+id/textView15"
         android:layout_below="@+id/pProfileChoresTodayListView"
         android:layout_centerHorizontal="true"
-        android:text="Chores Pending Approval"
-        android:textAlignment="center"
-        android:background="#faf8d3"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="135dp"
-        android:id="@+id/pProfileChoresPendingListView"
-        android:layout_below="@+id/textView15"
-        android:layout_centerHorizontal="true"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Chores Completed Today"
-        android:id="@+id/textView16"
-        android:layout_below="@+id/pProfileChoresPendingListView"
-        android:layout_centerHorizontal="true"
+        android:text="Chores Completed"
         android:textAlignment="center"
         android:background="#9bfaa0"
         android:textStyle="bold"/>
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="135dp"
+        android:layout_height="130dp"
         android:id="@+id/pProfileChoresCompletedListView"
-        android:layout_below="@+id/textView16"
+        android:layout_below="@+id/textView15"
         android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chores Pending Approval"
+        android:id="@+id/textView16"
+        android:layout_below="@+id/pProfileChoresCompletedListView"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:background="#faf8d3"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="130dp"
+        android:id="@+id/pProfileChoresPendingListView"
+        android:layout_below="@+id/textView16"
+        android:layout_centerHorizontal="true"
+        android:choiceMode="singleChoice"
+        android:listSelector="#f9f5d2"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/pProfileChoresPendingListView">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Approve"
+            android:id="@+id/pProfileApproveButton"
+            android:layout_weight="1"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deny"
+            android:id="@+id/pProfileDenyButton"
+            android:layout_weight="1"
+            android:paddingLeft="4sp"/>
+    </LinearLayout>
 </RelativeLayout>
