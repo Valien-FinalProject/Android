@@ -45,6 +45,7 @@ public class ParentProfileActivity extends AppCompatActivity
     ListView pendingList;
     Button mApprovePending;
     Button mDenyPending;
+    SimpleAdapter pendingAdapter;
 
 
     ArrayList<Chore> pendingChores = new ArrayList<>();
@@ -124,7 +125,9 @@ public class ParentProfileActivity extends AppCompatActivity
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        data.add(datum);
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
 
 //                        choreNames.add(chore.getName());
                     }
@@ -165,15 +168,17 @@ public class ParentProfileActivity extends AppCompatActivity
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        data.add(datum);
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
                     }
-                    SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                    pendingAdapter = new SimpleAdapter(ParentProfileActivity.this, data,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList=(ListView)
                             findViewById(R.id.pProfileChoresPendingListView);
-                    myList.setAdapter(adapter);
+                    myList.setAdapter(pendingAdapter);
                 }
 
                 @Override
@@ -204,7 +209,9 @@ public class ParentProfileActivity extends AppCompatActivity
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        data.add(datum);
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
                     }
                     SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
                             android.R.layout.simple_list_item_2,
@@ -249,6 +256,7 @@ public class ParentProfileActivity extends AppCompatActivity
                                     if (response.code() == 200){
                                         Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
+                                                pendingAdapter.notifyDataSetChanged();
                                     }
 
                                 }
