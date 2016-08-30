@@ -12,17 +12,18 @@
         android:name=".BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Chalkboard Chores"
+        android:label="|"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.CreateChildActivity"/>
         <activity
-            android:name=".activities.ParentProfileActivity"/>
+            android:name=".activities.ParentProfileActivity"
+            android:label="|"/>
         <activity
             android:name=".activities.CreateChoreActivity"/>
         <activity
             android:name=".activities.ChildProfileActivity"
-            android:label="ChildProfileActivity"/>
+            android:label="|"/>
         <activity
             android:name=".activities.CreateRewardActivity"
             android:label="CreateRewardActivity"/>

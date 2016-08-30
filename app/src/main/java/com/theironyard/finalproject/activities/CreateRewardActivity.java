@@ -13,12 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.theironyard.finalproject.command.RewardCommand;
 import com.theironyard.finalproject.representations.Reward;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import com.theironyard.finalproject.R;
@@ -58,18 +62,25 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onResponse(Call<ArrayList<Reward>> callCurrentChores, Response<ArrayList<Reward>> response) {
                     ArrayList<Reward> rewards = response.body();
-                    ArrayList<String> rewardNames = new ArrayList<>();
-                    Iterator<Reward> rewardNamesIterator = rewards.iterator();
-                    while (rewardNamesIterator.hasNext()) {
-                        rewardNames.add(rewardNamesIterator.next().getName());
+
+                    List<Map<String, String>> data = new ArrayList<>();
+
+                    for (Reward reward : rewards){
+                        Map<String, String> datum = new HashMap<>(2);
+
+                        datum.put("name", reward.getName());
+                        datum.put("points", String.valueOf(reward.getPoints()) + " Points");
+
+                        data.add(datum);
+
                     }
-                    ArrayAdapter<String> stringArrayAdapter =
-                            new ArrayAdapter<>(CreateRewardActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    rewardNames);
+                    SimpleAdapter adapter = new SimpleAdapter(CreateRewardActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "points"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList = (ListView)
                             findViewById(R.id.allRewardsListView);
-                    myList.setAdapter(stringArrayAdapter);
+                    myList.setAdapter(adapter);
                 }
 
                 @Override
