@@ -96,16 +96,14 @@ public class ChildViewRewardsActivity extends AppCompatActivity {
                     rewards = response.body();
                     List<Map<String, String>> data = new ArrayList<>();
 
-    //                ArrayList<String> rewardNames = new ArrayList<>();
-    //                ArrayList<String> rewardPoints = new ArrayList<>();
-
                     for (Reward reward : rewards){
                         Map<String, String> datum = new HashMap<>(2);
-    //                    rewardNames.add(reward.getName());
-    //                    rewardPoints.add(reward.getPoints() + " Points");
+
                         datum.put("name", reward.getName());
                         datum.put("points", String.valueOf(reward.getPoints()) + " Points");
+
                         data.add(datum);
+
                         childMap.put(reward.getName(), reward.getId());
                         indexMap.put(reward.getName(), rewards.indexOf(reward));
                     }

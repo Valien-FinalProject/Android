@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.theironyard.finalproject.services.ParentChoreService;
@@ -28,6 +29,7 @@ import com.theironyard.finalproject.representations.Chore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.ButterKnife;
@@ -43,6 +45,7 @@ public class ParentProfileActivity extends AppCompatActivity
     ListView pendingList;
     Button mApprovePending;
     Button mDenyPending;
+    SimpleAdapter pendingAdapter;
 
 
     ArrayList<Chore> pendingChores = new ArrayList<>();
@@ -113,16 +116,27 @@ public class ParentProfileActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     ArrayList<Chore> chores = response.body();
-                    ArrayList<String> choreNames = new ArrayList<>();
+//                     ArrayList<String> choreNames = new ArrayList<>();
+                    List<Map<String, String>> data = new ArrayList<>();
+
                     for (Chore chore : chores){
-                        choreNames.add(chore.getName());
+                        Map<String, String> datum = new HashMap<>(2);
+
+                        datum.put("name", chore.getName());
+                        datum.put("points", String.valueOf(chore.getValue()) + " Points");
+
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
+
+//                        choreNames.add(chore.getName());
                     }
-                    ArrayAdapter<String> stringArrayAdapter=
-                            new ArrayAdapter<String>(ParentProfileActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    choreNames);
+                    SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "points"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList=(ListView) findViewById(R.id.pProfileChoresTodayListView);
-                    myList.setAdapter(stringArrayAdapter);
+                    myList.setAdapter(adapter);
                 }
 
                 @Override
@@ -144,19 +158,27 @@ public class ParentProfileActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     pendingChores = response.body();
-                    ArrayList<String> choreNames = new ArrayList<>();
+                    List<Map<String, String>> data = new ArrayList<>();
 
                     for (Chore chore : pendingChores){
+                        Map<String, String> datum = new HashMap<>(2);
+
                         pendingChoreMap.put(chore.getName(), chore);
-                        choreNames.add(chore.getName());
+
+                        datum.put("name", chore.getName());
+                        datum.put("points", String.valueOf(chore.getValue()) + " Points");
+
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
                     }
-                    ArrayAdapter<String> stringArrayAdapter=
-                            new ArrayAdapter<>(ParentProfileActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    choreNames);
+                    pendingAdapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "points"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList=(ListView)
                             findViewById(R.id.pProfileChoresPendingListView);
-                    myList.setAdapter(stringArrayAdapter);
+                    myList.setAdapter(pendingAdapter);
                 }
 
                 @Override
@@ -178,17 +200,25 @@ public class ParentProfileActivity extends AppCompatActivity
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     ArrayList<Chore> completeChores = response.body();
-                    ArrayList<String> choreNames = new ArrayList<>();
+
+                    List<Map<String, String>> data = new ArrayList<>();
+
                     for (Chore chore: completeChores){
-                        choreNames.add(chore.getName());
+                        Map<String, String> datum = new HashMap<>(2);
+
+                        datum.put("name", chore.getName());
+                        datum.put("points", String.valueOf(chore.getValue()) + " Points");
+
+                        if (!data.contains(datum)){
+                            data.add(datum);
+                        }
                     }
-                    ArrayAdapter<String> stringArrayAdapter=
-                            new ArrayAdapter<>(ParentProfileActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    choreNames);
-                    ListView myList=(ListView)
-                            findViewById(R.id.pProfileChoresCompletedListView);
-                    myList.setAdapter(stringArrayAdapter);
+                    SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                            android.R.layout.simple_list_item_2,
+                            new String[] {"name", "points"},
+                            new int[] {android.R.id.text1, android.R.id.text2});
+                    ListView myList=(ListView)findViewById(R.id.pProfileChoresCompletedListView);
+                    myList.setAdapter(adapter);
                 }
 
                 @Override
@@ -226,6 +256,7 @@ public class ParentProfileActivity extends AppCompatActivity
                                     if (response.code() == 200){
                                         Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
+                                                pendingAdapter.notifyDataSetChanged();
                                     }
 
                                 }
