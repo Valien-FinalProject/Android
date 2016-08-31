@@ -93,7 +93,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 int childPoints = response.body();
 
-                TextView pointText = (TextView)findViewById(R.id.childProfilePointTotalText);
+                TextView pointText = (TextView) findViewById(R.id.childProfilePointTotalText);
                 pointText.setText(Integer.toString(childPoints));
             }
 
@@ -122,21 +122,21 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
                     chores = response.body();
                     ArrayList<String> choreNames = new ArrayList<>();
                     choreData = new ArrayList<>();
-                    for (Chore chore : chores){
+                    for (Chore chore : chores) {
 
                         Map<String, String> datum = new HashMap<>(2);
                         datum.put("name", chore.getName());
                         datum.put("value", "Value: " + String.valueOf(chore.getValue()) + " Points");
                         choreData.add(datum);
                         choreNames.add(chore.getName());
-                        choreMap.put(chore.getName(),chore);
+                        choreMap.put(chore.getName(), chore);
                         childMap.put(chore.getName(), chore.getId());
                     }
 
-                   adapter = new SimpleAdapter(ChildProfileActivity.this, choreData,
+                    adapter = new SimpleAdapter(ChildProfileActivity.this, choreData,
                             android.R.layout.simple_list_item_2,
-                            new String[] {"name", "value"},
-                            new int[] {android.R.id.text1, android.R.id.text2});
+                            new String[]{"name", "value"},
+                            new int[]{android.R.id.text1, android.R.id.text2});
                     ListView myList = (ListView) findViewById(R.id.childProfileChoresListView);
                     myList.setAdapter(adapter);
                 }
@@ -164,19 +164,16 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
         // Handle item selection
         int id = item.getItemId();
 
-        if (id == R.id.childHome){
+        if (id == R.id.childHome) {
             startChildProfileActivity();
             return true;
-        }
-        else if(id == R.id.rewards){
+        } else if (id == R.id.rewards) {
             startChildViewRewardsActivity();
             return true;
-        }
-        else if(id == R.id.wishlist){
+        } else if (id == R.id.wishlist) {
             startCreateWishListItemActivity();
             return true;
-        }
-        else if(id == R.id.childLogout){
+        } else if (id == R.id.childLogout) {
             try {
                 startChildLogoutActivity();
             } catch (Exception e) {
@@ -192,14 +189,17 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
         Intent intent = new Intent(this, ChildProfileActivity.class);
         startActivity(intent);
     }
+
     private void startChildViewRewardsActivity() {
         Intent intent = new Intent(this, ChildViewRewardsActivity.class);
         startActivity(intent);
     }
+
     private void startCreateWishListItemActivity() {
         Intent intent = new Intent(this, CreateWishlistItemActivity.class);
         startActivity(intent);
     }
+
     private void startChildLogoutActivity() throws Exception {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
@@ -207,7 +207,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        final Map choreName = (Map)adapter.getItem(position);
+        final Map choreName = (Map) adapter.getItem(position);
         Chore chore = choreMap.get(choreName.get("name"));
 
         try {
@@ -215,14 +215,14 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
             callMakeChorePending.enqueue(new Callback<Child>() {
                 @Override
                 public void onResponse(Call<Child> call, Response<Child> response) {
-                    Snackbar.make(choreList,"Your Chore is now Pending ;)", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(choreList, "Your Chore is now Pending ;)", Snackbar.LENGTH_LONG).show();
                     choreData.remove(choreName);
                     adapter.notifyDataSetChanged();
                 }
 
                 @Override
                 public void onFailure(Call<Child> call, Throwable t) {
-                    Snackbar.make(choreList,"Your Chore didn't make it through...booo! :'(", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(choreList, "Your Chore didn't make it through...booo! :'(", Snackbar.LENGTH_LONG).show();
                 }
             });
         } catch (Exception e) {
