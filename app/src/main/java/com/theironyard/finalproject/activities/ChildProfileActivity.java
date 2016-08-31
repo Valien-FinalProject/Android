@@ -176,7 +176,11 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
             return true;
         }
         else if(id == R.id.childLogout){
-            startChildLogoutActivity();
+            try {
+                startChildLogoutActivity();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
@@ -195,7 +199,19 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
         Intent intent = new Intent(this, CreateWishlistItemActivity.class);
         startActivity(intent);
     }
-    private void startChildLogoutActivity() {
+    private void startChildLogoutActivity() throws Exception {
+//        //Call<Void> callChildLog = childChoreService.getChildApi().logout(token);
+//        callChildLog.enqueue(new Callback<Void>() {
+//            @Override
+//            public void onResponse(Call<Void> call, Response<Void> response) {
+//                Snackbar.make(choreList,"You've been logged out;)", Snackbar.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Void> call, Throwable t) {
+//
+//            }
+//        });
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
@@ -211,6 +227,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onResponse(Call<Child> call, Response<Child> response) {
                     Snackbar.make(choreList,"Your Chore is now Pending ;)", Snackbar.LENGTH_LONG).show();
+                    choreList.refreshDrawableState();
                 }
 
                 @Override

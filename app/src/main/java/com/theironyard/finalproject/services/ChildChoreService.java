@@ -2,6 +2,7 @@ package com.theironyard.finalproject.services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInstaller;
 
 import com.theironyard.finalproject.command.TokenCommand;
 import com.theironyard.finalproject.command.UserCommand;
@@ -113,6 +114,9 @@ public class ChildChoreService {
     }
 
     public interface ChildAPI{
+        @POST("logout")
+        Call<Void> logout(@Header(TOKEN_KEY) String token);
+
         @GET("current")
         Call<ArrayList<Chore>> getChores(@Header(TOKEN_KEY) String token);
 

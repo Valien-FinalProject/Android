@@ -37,15 +37,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ParentProfileActivity extends AppCompatActivity
-
-        implements View.OnClickListener {
+public class ParentProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     Spinner topSpinner;
+    ListView currentList;
     ListView pendingList;
     Button mApprovePending;
     Button mDenyPending;
     SimpleAdapter pendingAdapter;
+    SimpleAdapter currentAdapter;
 
 
     ArrayList<Chore> pendingChores = new ArrayList<>();
@@ -63,6 +63,7 @@ public class ParentProfileActivity extends AppCompatActivity
         mDenyPending = (Button)findViewById(R.id.pProfileDenyButton);
         ButterKnife.bind(this);
         token = "token " + parentChoreService.getCurrentToken();
+        currentList = (ListView)findViewById(R.id.pProfileChoresTodayListView);
         pendingList = (ListView) findViewById(R.id.pProfileChoresPendingListView);
         mApprovePending.setOnClickListener(this);
         mDenyPending.setOnClickListener(this);
@@ -131,17 +132,19 @@ public class ParentProfileActivity extends AppCompatActivity
 
 //                        choreNames.add(chore.getName());
                     }
-                    SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                    currentAdapter = new SimpleAdapter(ParentProfileActivity.this, data,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
-                    ListView myList=(ListView) findViewById(R.id.pProfileChoresTodayListView);
-                    myList.setAdapter(adapter);
+                    ListView myList= currentList;//(ListView) findViewById(R.id.pProfileChoresTodayListView);
+                    currentAdapter.notifyDataSetChanged();
+                    myList.setAdapter(currentAdapter);
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<Chore>> call, Throwable t) {
-
+                    String foo = "bar";
+                    foo.toString();
                 }
             });
         } catch (Exception e) {
@@ -240,7 +243,8 @@ public class ParentProfileActivity extends AppCompatActivity
     @Override
     public void onClick(final View view) {
 
-        String wishName= (String) pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
+        Map wishMap= (HashMap)pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
+        String wishName = (String)wishMap.get("name");
         Chore pendingChore = pendingChoreMap.get(wishName);
         int pendingChoreId = pendingChore.getId();
 
@@ -256,7 +260,7 @@ public class ParentProfileActivity extends AppCompatActivity
                                     if (response.code() == 200){
                                         Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
-                                                pendingAdapter.notifyDataSetChanged();
+                                                //pendingAdapter.notifyDataSetChanged();
                                     }
 
                                 }
