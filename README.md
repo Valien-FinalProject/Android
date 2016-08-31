@@ -1,7 +1,6 @@
-![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
-# Android
+# Android ![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)
 
-![screenshot](screenshot.png)
+![screenshot](screenshot.jpg)
 
 ##Overview
 This is the Android app for our Chalkboard Chores group project. Chalkboard Chores is an application
