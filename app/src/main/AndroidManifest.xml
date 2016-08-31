@@ -25,8 +25,7 @@
             android:name=".activities.ChildProfileActivity"
             android:label="|"/>
         <activity
-            android:name=".activities.CreateRewardActivity"
-            android:label="CreateRewardActivity"/>
+            android:name=".activities.CreateRewardActivity"/>
         <activity android:name=".activities.ParentViewWishlistActivity">
         </activity>
         <activity android:name=".activities.ParentViewChoresActivity">
@@ -67,11 +66,6 @@
         <activity android:name=".activities.ChildViewRewardsActivity">
         </activity>
         <activity android:name=".activities.ChildLogoutActivity">
-        </activity>
-        <activity
-            android:name=".old.BaseActivity"
-            android:label="Nav"
-            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 
