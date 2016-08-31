@@ -1,56 +1,45 @@
 package com.theironyard.finalproject.activities;
 
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.theironyard.finalproject.R;
 import com.theironyard.finalproject.command.RewardCommand;
 import com.theironyard.finalproject.representations.Child;
-import com.theironyard.finalproject.representations.Chore;
 import com.theironyard.finalproject.representations.Reward;
 import com.theironyard.finalproject.services.ParentChoreService;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ParentViewWishlistActivity extends AppCompatActivity implements View.OnClickListener{
 
-    ArrayAdapter<Reward> wishes;
+    ArrayAdapter<String> wishAdapter;
+    ArrayList<Reward> rewards;
     ListView wishList;
+    Map<String, Integer> rewardIndexMap = new HashMap<>();
     Map<String, Reward> rewardMap = new HashMap<>();
+    ArrayList<String> wishNamesList;
 
     @Bind(R.id.pViewWishlistPointValueText)
     EditText mPoints;
@@ -90,11 +79,12 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                 public void onResponse(Call<ArrayList<Child>> call, Response<ArrayList<Child>> response) {
                     ArrayList<Child> children = response.body();
                     ArrayList<String> childrenNames = new ArrayList<String>();
+
                     for (Child child : children) {
                         childrenNames.add(child.getName());
                         childMap.put(child.getName(), child.getId());
-                        //childId = child.getId();
                     }
+
                     ArrayAdapter<String> stringArrayAdapter =
                             new ArrayAdapter<>(ParentViewWishlistActivity.this,
                                     android.R.layout.simple_spinner_dropdown_item,
@@ -130,17 +120,19 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                     callCurrentRewards.enqueue(new Callback<ArrayList<Reward>>() {
                         @Override
                         public void onResponse(Call<ArrayList<Reward>> callCurrentRewards, Response<ArrayList<Reward>> response) {
-                            ArrayList<Reward> rewards = response.body();
+                            rewards = response.body();
 
-                            ArrayList<String> rewardNames = new ArrayList<>();
+                            wishNamesList = new ArrayList<>();
+                            int index = -1;
                             for (Reward reward : rewards){
+                                index ++;
                                 rewardMap.put(reward.getName(), reward);
-                                rewardNames.add(reward.getName());
+                                rewardIndexMap.put(reward.getName(), index);
+                                wishNamesList.add(reward.getName());
                             }
-                            ArrayAdapter<String> wishes =
-                                    new ArrayAdapter<>(ParentViewWishlistActivity.this, android.R.layout.simple_list_item_1, rewardNames);
+                            wishAdapter = new ArrayAdapter<>(ParentViewWishlistActivity.this, android.R.layout.simple_list_item_1, wishNamesList);
                             wishList = (ListView) findViewById(R.id.pViewWishlistListView);
-                            wishList.setAdapter(wishes);
+                            wishList.setAdapter(wishAdapter);
                             wishList.setOnItemSelectedListener(selectWish);
                         }
 
@@ -164,7 +156,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
         AdapterView.OnItemSelectedListener selectWish = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                rewardId = (int) wishes.getItemId(position);
+                rewardId = (int) wishAdapter.getItemId(position);
             }
 
             @Override
@@ -172,44 +164,6 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
 
             }
         };
-
-        /*******************************************
-         * Insert image and url into ListView
-         *******************************************/
-
-//        private void populateListView() {
-//            ArrayAdapter<Reward> adapter = new MyListAdapter();
-//            ListView list = (ListView) findViewById(R.id.pViewWishlistListView);
-//            list.setAdapter(adapter);
-//        }
-//
-//    private class MyListAdapter extends ArrayAdapter<Reward> {
-//        public MyListAdapter() {
-//            super(ParentViewWishlistActivity.this, R.layout.item_view, childWishes);
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            View itemView = convertView;
-//            if (itemView == null) {
-//                itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
-//            }
-//
-//            // Select reward to view
-//            Reward currentWish = rewards.get(position);
-//
-//            ImageView imageView = (ImageView)itemView.findViewById(R.id.wishlistItemImageView);
-//            Picasso.with(ParentViewWishlistActivity.this).load(currentWish.getImageUrl()).into(imageView);
-//
-//            TextView nameText = (TextView) itemView.findViewById(R.id.viewWishlistNameText);
-//            nameText.setText(currentWish.getName());
-//
-//            TextView urlText = (TextView) itemView.findViewById(R.id.viewWishlistUrlText);
-//            urlText.setText(currentWish.getUrl());
-//
-//            return itemView;
-//        }
-//    }
 
         /*******************************************
          * Approve/Deny Wishlist Item
@@ -220,8 +174,11 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
             switch (view.getId()) {
                 case (R.id.pViewWishlistApproveButton):
 
-                    int points = Integer.parseInt(mPoints.getText().toString());
-                    String wishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
+                    int points = 0;
+                    if (!mPoints.getText().toString().equals("")) {
+                        points = Integer.parseInt(mPoints.getText().toString());
+                    }
+                    final String wishName= (String) wishList.getAdapter().getItem(wishList.getCheckedItemPosition());
                     Reward reward = rewardMap.get(wishName);
                     RewardCommand rewardCommand = new RewardCommand(reward.getName(), reward.getDescription(),points);
 
@@ -236,6 +193,11 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                                             Snackbar.make(view, "The wish has been approved is now a reward!", Snackbar.LENGTH_LONG)
                                                     .setAction("Action", null).show();
                                             setDefaultValues();
+                                            /* Get this to work later */
+//                                            int index = rewardIndexMap.get(wishName);
+//                                            wishNamesList.remove(index);
+
+                                            wishList.refreshDrawableState();
                                         }
                                     }
 
@@ -250,7 +212,7 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                     break;
 
                 case (R.id.pViewWishlistDenyButton):
-                    String deleteWishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
+                    final String deleteWishName= (String) wishList.getAdapter().getItem((int)wishList.getSelectedItemId());
                     Reward deleteReward = rewardMap.get(deleteWishName);
                     int deleteRewardId = deleteReward.getId();
 
@@ -262,6 +224,8 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
                                         if (response.code() == 200){
                                             Snackbar.make(view, "The wish has been deleted!", Snackbar.LENGTH_LONG)
                                                     .setAction("Action", null).show();
+                                            wishNamesList.remove(rewardIndexMap.get(deleteWishName));
+                                            wishAdapter.notifyDataSetChanged();
                                         }
                                     }
 
@@ -280,11 +244,6 @@ public class ParentViewWishlistActivity extends AppCompatActivity implements Vie
 
     public void setDefaultValues() {
         mPoints.setText("");
-    }
-
-    private void startPViewWishlist() {
-        Intent intent = new Intent(this, ParentViewWishlistActivity.class);
-        startActivity(intent);
     }
     /************************************
      * Navigation

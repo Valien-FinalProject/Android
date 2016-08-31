@@ -48,6 +48,9 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
     @Bind(R.id.createRewardButton)
     Button mButton;
 
+    SimpleAdapter rewardAdapter;
+    List<Map<String, String>> rewardData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,7 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
                 public void onResponse(Call<ArrayList<Reward>> callCurrentChores, Response<ArrayList<Reward>> response) {
                     ArrayList<Reward> rewards = response.body();
 
-                    List<Map<String, String>> data = new ArrayList<>();
+                    rewardData = new ArrayList<>();
 
                     for (Reward reward : rewards){
                         Map<String, String> datum = new HashMap<>(2);
@@ -71,16 +74,16 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
                         datum.put("name", reward.getName());
                         datum.put("points", String.valueOf(reward.getPoints()) + " Points");
 
-                        data.add(datum);
+                        rewardData.add(datum);
 
                     }
-                    SimpleAdapter adapter = new SimpleAdapter(CreateRewardActivity.this, data,
+                    rewardAdapter = new SimpleAdapter(CreateRewardActivity.this, rewardData,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList = (ListView)
                             findViewById(R.id.allRewardsListView);
-                    myList.setAdapter(adapter);
+                    myList.setAdapter(rewardAdapter);
                 }
 
                 @Override
@@ -114,7 +117,14 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
                                 RewardCommand rewardCommand = response.body();
                                 ParentChoreService.saveReward(rewardCommand);
                                 Snackbar.make(mButton, "You have created a new reward!", Snackbar.LENGTH_LONG).show();
+                                Map<String, String> newDatum = new HashMap<>(2);
+
+                                newDatum.put("name", rewardCommand.getName());
+                                newDatum.put("points", String.valueOf(rewardCommand.getPoints()) + " Points");
+                                rewardData.add(newDatum);
+                                rewardAdapter.notifyDataSetChanged();
                                 setDefaultValues();
+
                             } else {
                                 Snackbar.make(mButton, "Unable to Create New Reward.Try again", Snackbar.LENGTH_LONG).show();
                             }
@@ -129,48 +139,7 @@ public class CreateRewardActivity extends AppCompatActivity implements AdapterVi
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*******************************************
-         * All Rewards ListView and ArrayAdapter
-         *******************************************/
-
-        try {
-            Call<ArrayList<Reward>> callAllRewards = parentChoreService.getParentApi().getParentRewards(token);
-            callAllRewards.enqueue(new Callback<ArrayList<Reward>>() {
-                @Override
-                public void onResponse(Call<ArrayList<Reward>> callCurrentChores, Response<ArrayList<Reward>> response) {
-                    ArrayList<Reward> rewards = response.body();
-                    ArrayList<String> rewardNames = new ArrayList<>();
-                    Iterator<Reward> rewardNamesIterator = rewards.iterator();
-                    while (rewardNamesIterator.hasNext()) {
-                        rewardNames.add(rewardNamesIterator.next().getName());
-                    }
-                    ArrayAdapter<String> stringArrayAdapter =
-                            new ArrayAdapter<>(CreateRewardActivity.this,
-                                    android.R.layout.simple_list_item_1,
-                                    rewardNames);
-                    ListView myList = (ListView)
-                            findViewById(R.id.allRewardsListView);
-                    myList.setAdapter(stringArrayAdapter);
-                }
-
-                @Override
-                public void onFailure(Call<ArrayList<Reward>> call, Throwable t) {
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
-
-//    AdapterView.OnClickListener mListener = new AdapterView.OnClickListener() {
-//
-//        @Override
-//        public void onClick(View view) {
-//
-//        }
-//    };
 
     public void setDefaultValues() {
         mName.setText("");

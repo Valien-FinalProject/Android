@@ -36,6 +36,7 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
     final ChildChoreService childChoreService = new ChildChoreService();
     final Map<String, Integer> childMap = new HashMap<>();
     Map<String, Chore> choreMap = new HashMap<>();
+    List<Map<String, String>> choreData;
     ArrayList<Chore> chores;
     SimpleAdapter adapter;
 
@@ -120,19 +121,19 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
 
                     chores = response.body();
                     ArrayList<String> choreNames = new ArrayList<>();
-                    List<Map<String, String>> data = new ArrayList<>();
-
+                    choreData = new ArrayList<>();
                     for (Chore chore : chores){
+
                         Map<String, String> datum = new HashMap<>(2);
                         datum.put("name", chore.getName());
                         datum.put("value", "Value: " + String.valueOf(chore.getValue()) + " Points");
-                        data.add(datum);
+                        choreData.add(datum);
                         choreNames.add(chore.getName());
                         choreMap.put(chore.getName(),chore);
                         childMap.put(chore.getName(), chore.getId());
                     }
 
-                   adapter = new SimpleAdapter(ChildProfileActivity.this, data,
+                   adapter = new SimpleAdapter(ChildProfileActivity.this, choreData,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "value"},
                             new int[] {android.R.id.text1, android.R.id.text2});
@@ -200,25 +201,13 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
         startActivity(intent);
     }
     private void startChildLogoutActivity() throws Exception {
-//        //Call<Void> callChildLog = childChoreService.getChildApi().logout(token);
-//        callChildLog.enqueue(new Callback<Void>() {
-//            @Override
-//            public void onResponse(Call<Void> call, Response<Void> response) {
-//                Snackbar.make(choreList,"You've been logged out;)", Snackbar.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Void> call, Throwable t) {
-//
-//            }
-//        });
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-        Map choreName = (Map)adapter.getItem(position);
+        final Map choreName = (Map)adapter.getItem(position);
         Chore chore = choreMap.get(choreName.get("name"));
 
         try {
@@ -227,7 +216,8 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
                 @Override
                 public void onResponse(Call<Child> call, Response<Child> response) {
                     Snackbar.make(choreList,"Your Chore is now Pending ;)", Snackbar.LENGTH_LONG).show();
-                    choreList.refreshDrawableState();
+                    choreData.remove(choreName);
+                    adapter.notifyDataSetChanged();
                 }
 
                 @Override
@@ -242,112 +232,3 @@ public class ChildProfileActivity extends AppCompatActivity implements AdapterVi
         return true;
     }
 }
-        /************************************
-         * OLD Navigation
-         ************************************/
-
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.setDrawerListener(toggle);
-//        toggle.syncState();
-//
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        navigationView.setNavigationItemSelectedListener(this);
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        if (drawer.isDrawerOpen(GravityCompat.START)) {
-//            drawer.closeDrawer(GravityCompat.START);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.child_profile, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    @SuppressWarnings("StatementWithEmptyBody")
-//    @Override
-//    public boolean onNavigationItemSelected(MenuItem item) {
-//        // Handle navigation view item clicks here.
-//        int id = item.getItemId();
-//
-//        if (id == R.id.nav_settings) {
-//            // Handle the camera action
-//        } else if (id == R.id.nav_view_chores) {
-//            startCViewChores();
-//        } else if (id == R.id.nav_view_wishlists) {
-//            startCViewWishlist();
-//        } else if (id == R.id.nav_view_calendar) {
-//            startViewCalendar();
-//        } else if (id == R.id.nav_create_wishlist_item) {
-//            startCreateWishlistItem();
-//        } else if (id == R.id.nav_update) {
-//            startUpdateProfile();
-//        }
-//
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        drawer.closeDrawer(GravityCompat.START);
-//        return true;
-//    }
-//
-//    private void startCViewChores() {
-//        Intent intent = new Intent(this, ChildViewChoresActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    private void startCViewWishlist() {
-//        Intent intent = new Intent(this, ChildViewWishlistActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    private void startViewCalendar() {
-//        Intent intent = new Intent(this, CalendarActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    private void startCreateWishlistItem() {
-//        Intent intent = new Intent(this, CreateWishlistItemActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    private void startUpdateProfile() {
-//        Intent intent = new Intent(this, UpdateProfileActivity.class);
-//        startActivity(intent);
-//    }
-
-

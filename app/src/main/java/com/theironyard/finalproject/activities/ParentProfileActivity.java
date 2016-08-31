@@ -6,12 +6,7 @@ import android.os.Bundle;
 import android.view.MenuInflater;
 import android.support.design.widget.Snackbar;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -28,7 +23,6 @@ import com.theironyard.finalproject.representations.Chore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,11 +40,18 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
     Button mDenyPending;
     SimpleAdapter pendingAdapter;
     SimpleAdapter currentAdapter;
+    SimpleAdapter completeAdapter;
+
 
 
     ArrayList<Chore> pendingChores = new ArrayList<>();
     Map<String, Chore> pendingChoreMap = new HashMap<>();
     final Map<String, Integer> childMap = new HashMap<>();
+    List<Map<String, String>> completeChoreData;
+    List<Map<String, String>> pendingChoreData;
+    List<Map<String, String>> currentChoreData;
+
+
     int childId;
     final ParentChoreService parentChoreService = new ParentChoreService();
     String token = "";
@@ -117,8 +118,7 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     ArrayList<Chore> chores = response.body();
-//                     ArrayList<String> choreNames = new ArrayList<>();
-                    List<Map<String, String>> data = new ArrayList<>();
+                    currentChoreData = new ArrayList<>();
 
                     for (Chore chore : chores){
                         Map<String, String> datum = new HashMap<>(2);
@@ -126,17 +126,15 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        if (!data.contains(datum)){
-                            data.add(datum);
+                        if (!currentChoreData.contains(datum)){
+                            currentChoreData.add(datum);
                         }
-
-//                        choreNames.add(chore.getName());
                     }
-                    currentAdapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                    currentAdapter = new SimpleAdapter(ParentProfileActivity.this, currentChoreData,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
-                    ListView myList= currentList;//(ListView) findViewById(R.id.pProfileChoresTodayListView);
+                    ListView myList= currentList;
                     currentAdapter.notifyDataSetChanged();
                     myList.setAdapter(currentAdapter);
                 }
@@ -161,7 +159,7 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                 @Override
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     pendingChores = response.body();
-                    List<Map<String, String>> data = new ArrayList<>();
+                    pendingChoreData = new ArrayList<>();
 
                     for (Chore chore : pendingChores){
                         Map<String, String> datum = new HashMap<>(2);
@@ -171,11 +169,11 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        if (!data.contains(datum)){
-                            data.add(datum);
+                        if (!pendingChoreData.contains(datum)){
+                            pendingChoreData.add(datum);
                         }
                     }
-                    pendingAdapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                    pendingAdapter = new SimpleAdapter(ParentProfileActivity.this, pendingChoreData,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
@@ -204,7 +202,7 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                 public void onResponse(Call<ArrayList<Chore>> callCurrentChores, Response<ArrayList<Chore>> response) {
                     ArrayList<Chore> completeChores = response.body();
 
-                    List<Map<String, String>> data = new ArrayList<>();
+                    completeChoreData = new ArrayList<>();
 
                     for (Chore chore: completeChores){
                         Map<String, String> datum = new HashMap<>(2);
@@ -212,16 +210,16 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                         datum.put("name", chore.getName());
                         datum.put("points", String.valueOf(chore.getValue()) + " Points");
 
-                        if (!data.contains(datum)){
-                            data.add(datum);
+                        if (!completeChoreData.contains(datum)){
+                            completeChoreData.add(datum);
                         }
                     }
-                    SimpleAdapter adapter = new SimpleAdapter(ParentProfileActivity.this, data,
+                    completeAdapter= new SimpleAdapter(ParentProfileActivity.this, completeChoreData,
                             android.R.layout.simple_list_item_2,
                             new String[] {"name", "points"},
                             new int[] {android.R.id.text1, android.R.id.text2});
                     ListView myList=(ListView)findViewById(R.id.pProfileChoresCompletedListView);
-                    myList.setAdapter(adapter);
+                    myList.setAdapter(completeAdapter);
                 }
 
                 @Override
@@ -243,9 +241,8 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(final View view) {
 
-        Map wishMap= (HashMap)pendingList.getAdapter().getItem((int)pendingList.getSelectedItemId());
-        String wishName = (String)wishMap.get("name");
-        Chore pendingChore = pendingChoreMap.get(wishName);
+        final Map wishMap= (Map)pendingAdapter.getItem(pendingList.getCheckedItemPosition());
+        Chore pendingChore = pendingChoreMap.get(wishMap.get("name"));
         int pendingChoreId = pendingChore.getId();
 
         switch (view.getId()){
@@ -260,7 +257,8 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                                     if (response.code() == 200){
                                         Snackbar.make(view, "Chore is now complete!", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
-                                                //pendingAdapter.notifyDataSetChanged();
+                                                completeChoreData.remove(wishMap);
+                                                pendingAdapter.notifyDataSetChanged();
                                     }
 
                                 }
@@ -285,6 +283,10 @@ public class ParentProfileActivity extends AppCompatActivity implements View.OnC
                                     if (response.code() == 200) {
                                         Snackbar.make(view, "Chore has been denied and returned to the child's list!", Snackbar.LENGTH_LONG)
                                                 .setAction("Action", null).show();
+                                        completeChoreData.add(wishMap);
+                                        pendingChoreData.remove(wishMap);
+                                        pendingAdapter.notifyDataSetChanged();
+                                        completeAdapter.notifyDataSetChanged();
                                     }
                                 }
 
